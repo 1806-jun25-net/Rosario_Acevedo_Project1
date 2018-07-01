@@ -5,12 +5,29 @@ using System.Text;
 
 namespace LittleJohnsHut.Library.Models
 {
-    class Inventory : IInvetory
+    class Inventory : IInventory
     {
-        public string typeOfIngidiante { get ; set ; }
-        public int quantity { get ; set ; }
-        public string Location { get ; set ; }
-        public DateTime orderFromUser { get ; set ; }
-        public string PizzaSold { get ; set; }
+        public int ID { get ; set ; }
+
+        private int quantity;
+
+        public int GetQuantity()
+        {
+            return quantity;
+        }
+
+        public void SetQuantity(int value)
+        {
+            if (quantity <= 0)
+            {
+                quantity = 0;
+            }else
+            {
+                quantity = value;
+            }
+            
+        }
+
+        public string NameOfProduct { get ; set ; }
     }
 }

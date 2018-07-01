@@ -5,10 +5,10 @@ using System.Text;
 
 namespace LittleJohnsHut.Library.Models
 {
-    public class Pizza : IPizza
+    public class Location : ILocation
     {
-        public bool cheese { get; set ; }
-        public string crust { get; set; }
-        public string topping { get; set ; }
+        public string address { get; set ; }
+        public int ID { get ; set ; }
+       
     }
 }

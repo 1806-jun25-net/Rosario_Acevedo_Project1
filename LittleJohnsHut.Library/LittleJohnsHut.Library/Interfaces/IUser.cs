@@ -6,11 +6,9 @@ namespace LittleJohnsHut.Library.Interfaces
 {
     interface IUser
     {
-        string name { get; set;  }
-        string address_Line1 { get; set; }
-        string address_Line2 { get; set; }
-        string ZipCode { get; set; }
-        
-
+        string firstName { get; set; }
+        string LastName { get; set; }
+        string location { get; set; }
+        DateTime hour_of_OrderPaced { get; set; }
     }
 }

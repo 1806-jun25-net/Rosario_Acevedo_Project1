@@ -6,11 +6,9 @@ namespace LittleJohnsHut.Library.Interfaces
 {
     interface IPizza
     {
-         decimal price { get; set; } 
-         string typeOfPizza { get; set; }
-         DateTime timeOfCreation { get; set; }
-         string whoCreatedIt { get; set; }
-         IEnumerable<Iingrediente> ListOfIngrediant { get; set; }
-         
+        bool cheese { get; set; }
+        string crust { get; set; }
+        string topping { get; set; }
+
     }
 }

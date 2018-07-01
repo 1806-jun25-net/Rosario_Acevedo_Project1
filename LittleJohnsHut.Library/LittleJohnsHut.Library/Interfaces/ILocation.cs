@@ -4,11 +4,10 @@ using System.Text;
 
 namespace LittleJohnsHut.Library.Interfaces
 {
-    interface IEmployee : IUser
+    interface ILocation
     {
-        string OrderPlace { get; set; }
-        decimal salary { get; set; }
-        
-
+        string address { get; set; }
+        int ID { get; set; }
+       
     }
 }
