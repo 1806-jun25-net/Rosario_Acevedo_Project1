@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LittleJohnsHut.Library", "LittleJohnsHut.Library\LittleJohnsHut.Library.csproj", "{BAB777A8-666A-4DE0-828C-5A052639B33C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp", "ConsoleApp\ConsoleApp.csproj", "{998804D8-AACE-4085-8B02-E70F0D7D1A2E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XML", "ConsoleApp\XML.csproj", "{998804D8-AACE-4085-8B02-E70F0D7D1A2E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

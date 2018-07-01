@@ -7,7 +7,8 @@ namespace LittleJohnsHut.Library.Interfaces
     interface ILocation
     {
         string address { get; set; }
+        
         int ID { get; set; }
-       
+
     }
 }

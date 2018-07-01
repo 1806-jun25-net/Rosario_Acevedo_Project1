@@ -5,7 +5,7 @@ using System.Text;
 
 namespace LittleJohnsHut.Library.Models
 {
-    class Inventory : IInventory
+    class Inventory : Iinventory
     {
         public int ID { get ; set ; }
 

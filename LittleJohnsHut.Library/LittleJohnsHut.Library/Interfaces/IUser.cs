@@ -9,6 +9,6 @@ namespace LittleJohnsHut.Library.Interfaces
         string firstName { get; set; }
         string LastName { get; set; }
         string location { get; set; }
-        DateTime hour_of_OrderPaced { get; set; }
+        
     }
 }

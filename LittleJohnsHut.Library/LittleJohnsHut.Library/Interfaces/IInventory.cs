@@ -4,14 +4,15 @@ using System.Text;
 
 namespace LittleJohnsHut.Library.Interfaces
 {
-    interface IInventory : ILocation
+    interface Iinventory
     {
+        string address { get; set; }
+
         int ID { get; set; }
 
         int GetQuntity();
         void SetQuntity(int value);
 
         string NameOfProduct { get; set; }
-
     }
 }

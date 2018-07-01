@@ -31,6 +31,22 @@ namespace ConsoleApp
             }
             
             Serilizer("data.xml", obj:  list);
+            Task<IEnumerable<Location>> desList = Des("data.xml");
+            IEnumerable<Location> result = new List<Location>();
+            try
+            {
+                result = desList.Result; // synchronously sits around until the result is ready
+                foreach ( var item in result)
+                {
+                    Console.WriteLine(item.ID+ "  " + item.address); 
+                    
+                }
+            }
+            catch (AggregateException ex)
+            {
+                Console.WriteLine("file wasn't found");
+            }
+           // list.AddRange(result);
             Console.ReadLine();
 
         }
@@ -66,7 +82,7 @@ namespace ConsoleApp
 
         }
       
-        public async Task<IEnumerable<object>> Des(string fn)
+        public static async Task<IEnumerable<Location>> Des(string fn)
         {
             var serial = new XmlSerializer(typeof(List<Location>));
 
@@ -78,7 +94,7 @@ namespace ConsoleApp
                     await fs.CopyToAsync(ms);
                 }
                 ms.Position = 0;
-                return (List<object>)serial.Deserialize(ms);
+                return (List<Location>)serial.Deserialize(ms);
             }
 
         }
