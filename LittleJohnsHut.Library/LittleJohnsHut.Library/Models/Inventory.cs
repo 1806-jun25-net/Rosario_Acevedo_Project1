@@ -9,25 +9,29 @@ namespace LittleJohnsHut.Library.Models
     {
         public int ID { get ; set ; }
 
-        private int quantity;
+        private int Quantity;
 
-        public int GetQuantity()
+
+        public int GetQuntity()
         {
-            return quantity;
+            return Quantity;
         }
 
-        public void SetQuantity(int value)
+        public void SetQuntity(int value)
         {
-            if (quantity <= 0)
+            if (value <= 0)
             {
-                quantity = 0;
-            }else
-            {
-                quantity = value;
+                Quantity = 0;
             }
-            
+            else
+            {
+                Quantity = value;
+            }
+
         }
 
         public string NameOfProduct { get ; set ; }
+        public string address { get; set ; }
+       
     }
 }

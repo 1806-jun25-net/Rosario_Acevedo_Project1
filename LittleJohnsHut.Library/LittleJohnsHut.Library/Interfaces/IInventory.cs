@@ -8,8 +8,8 @@ namespace LittleJohnsHut.Library.Interfaces
     {
         int ID { get; set; }
 
-        int GetQuantity();
-        void SetQuantity(int value);
+        int GetQuntity();
+        void SetQuntity(int value);
 
         string NameOfProduct { get; set; }
 
