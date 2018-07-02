@@ -13,7 +13,9 @@ namespace ConsoleApp
     {
         public static void Main(string[] args)
         {
+            
             Naming();
+            
            // var list = new List<Location>();
            // list.Add(new Location
            // {
@@ -50,6 +52,10 @@ namespace ConsoleApp
            // Console.ReadLine();
 
         }
+        public static List<User> SearchByName (List <User> list)
+        {
+            return list;
+        }
         public static List<Order> ReturningCustomer(List<Order> list)
         {
             return list;
@@ -78,6 +84,29 @@ namespace ConsoleApp
         {
             return list;
         }
+        public static void Location()
+        {
+            var list = new List<Location>();
+             list.Add(new Location
+             {
+                 ID = 1,
+                 address = "Reston VA"
+             }
+            );
+            list.Add(new Location
+            {
+                ID = 4,
+                address = "Tampa FL"
+            }
+            );
+            list.Add(new Location
+            {
+                ID = 5,
+                address = "California LA"
+            }
+           );
+            SerilizerLocation("DataLocation.XML", list);
+        }
         public static void Naming()
         {
 
@@ -100,12 +129,12 @@ namespace ConsoleApp
                 }
                 else if (loc.Equals("2"))
                 {
-                    location = "California VA";
+                    location = "California LA";
                     WrongInput = false;
                 }
                 else if (loc.Equals("3"))
                 {
-                    location = "Tampa VA";
+                    location = "Tampa FL";
                     WrongInput = false;
                 }
                 else
@@ -121,15 +150,32 @@ namespace ConsoleApp
                 LastName = ln, 
                 location = location
             });
+            Task<IEnumerable<User>> desList = DesUser("Userdata.xml");
+            IEnumerable<User> result = new List<User>();
+             try
+             {
+                 result = desList.Result; // synchronously sits around until the result is ready
+                 foreach ( var item in result)
+                 {
+                    list.Add(new User {
+                        firstName = item.firstName, 
+                        LastName = item.LastName, 
+                        location = item.location
+                    });
+
+                 }
+             }
+             catch (AggregateException ex)
+             {
+                Console.WriteLine("file wasn't found");
+            }
+
             SerilizerUser("Userdata.xml", obj: list);
 
 
 
         }
-        public static void Menu()
-        {
-            Console.WriteLine("Enter the");
-        }
+      
 
         public static void SerilizerOrder(string fileName, List<Order> obj)
         {
@@ -282,7 +328,7 @@ namespace ConsoleApp
 
         }
       
-        public static async Task<IEnumerable<Location>> Des(string fn)
+        public static async Task<IEnumerable<Location>> DesLocation(string fn)
         {
             var serial = new XmlSerializer(typeof(List<Location>));
 
@@ -298,7 +344,7 @@ namespace ConsoleApp
             }
 
         }
-        public static async Task<IEnumerable<Location>> DesOrder(string fn)
+        public static async Task<IEnumerable<Order>> DesOrder(string fn)
         {
             var serial = new XmlSerializer(typeof(List<Order>));
 
@@ -310,11 +356,11 @@ namespace ConsoleApp
                     await fs.CopyToAsync(ms);
                 }
                 ms.Position = 0;
-                return (List<Location>)serial.Deserialize(ms);
+                return (List<Order>)serial.Deserialize(ms);
             }
 
         }
-        public static async Task<IEnumerable<Location>> DesPizza(string fn)
+        public static async Task<IEnumerable<Pizza>> DesPizza(string fn)
         {
             var serial = new XmlSerializer(typeof(List<Pizza>));
 
@@ -326,11 +372,11 @@ namespace ConsoleApp
                     await fs.CopyToAsync(ms);
                 }
                 ms.Position = 0;
-                return (List<Location>)serial.Deserialize(ms);
+                return (List<Pizza>)serial.Deserialize(ms);
             }
 
         }
-        public static async Task<IEnumerable<Location>> DesUser(string fn)
+        public static async Task<IEnumerable<User>> DesUser(string fn)
         {
             var serial = new XmlSerializer(typeof(List<User>));
 
@@ -342,11 +388,11 @@ namespace ConsoleApp
                     await fs.CopyToAsync(ms);
                 }
                 ms.Position = 0;
-                return (List<Location>)serial.Deserialize(ms);
+                return (List<User>)serial.Deserialize(ms);
             }
 
         }
-        public static async Task<IEnumerable<Location>> DesInv(string fn)
+        public static async Task<IEnumerable<Inventory>> DesInv(string fn)
         {
             var serial = new XmlSerializer(typeof(List<Inventory>));
 
@@ -358,7 +404,7 @@ namespace ConsoleApp
                     await fs.CopyToAsync(ms);
                 }
                 ms.Position = 0;
-                return (List<Location>)serial.Deserialize(ms);
+                return (List<Inventory>)serial.Deserialize(ms);
             }
 
         }
