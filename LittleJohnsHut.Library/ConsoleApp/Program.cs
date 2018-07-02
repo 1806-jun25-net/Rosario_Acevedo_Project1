@@ -50,8 +50,37 @@ namespace ConsoleApp
            // Console.ReadLine();
 
         }
+        public static List<Order> ReturningCustomer(List<Order> list)
+        {
+            return list;
+        }
+        public static List<Order> DisplayOrderInLocation(List<Order> list)
+        {
+            return list;
+        }
+        public static List<Order> DisplayOrderByUser(List<Order> list)
+        {
+            return list; 
+        }
+        public static List<Order> OrderEarlest(List<Order> list)
+        {
+            return list;
+        }
+        public static List<Order> OrderLatest(List<Order> list)
+        {
+            return list;
+        }
+        public static List<Order> OrderChepest(List<Order> list)
+        {
+            return list;
+        }
+        public static List<Order> OrderMostExpencive(List<Order> list)
+        {
+            return list;
+        }
         public static void Naming()
         {
+
             Console.WriteLine("Please enter your First Name");
             string fn = Console.ReadLine();
             Console.WriteLine("Please enter your Last Name");
