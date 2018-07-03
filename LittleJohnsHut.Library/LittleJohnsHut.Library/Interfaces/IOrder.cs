@@ -8,12 +8,8 @@ namespace LittleJohnsHut.Library.Interfaces
     {
         string location { get; set; }
         string user { get; set; }
-      
-
-        int GetPizza_Count();
-        void SetPizza_Count(int value);
-
-        decimal Getprice();
-        void Setprice(decimal value);
+        decimal price { get; set; }
+        int PizzaCount { get; set; }
+        
     }
 }

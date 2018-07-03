@@ -7,40 +7,32 @@ namespace LittleJohnsHut.Library.Models
 {
     public class Order : IOrder
     {
-        private int _pizza_Count;
+        public int PizzaCount
+        {
+            get { return PizzaCount; }
+            set {
+                if (value > 0 && value <= 12)
+                {
+                    PizzaCount = value;
+                }
+            }
+        }
 
         public string location { get; set; }
         public string user { get; set; }
-        public DateTime date_Order => DateTime.Now;
-
-        public int GetPizza_Count()
+        public DateTime date_Order
         {
-            return _pizza_Count;
-        }
-
-        public void SetPizza_Count(int value)
-        {
-            if (value > 0 && value <= 12 )
+            get
             {
-                    _pizza_Count = value;
+                return DateTime.Now;
             }
-           
-            
-        }
-
-        private decimal price1;
-
-        public decimal Getprice()
-        {
-            return price1;
-        }
-
-        public void Setprice(decimal value)
-        {
-            if (value > 0 && value < 501){
-                price1 = value;
+            set
+            {
+                date_Order = value;
             }
-            
+          
         }
+
+        public decimal price { get { return price; } set { if (value > 0 && value < 501) { price = value; } ;} }
     }
 }
