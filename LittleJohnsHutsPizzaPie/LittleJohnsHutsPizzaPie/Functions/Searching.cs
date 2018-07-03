@@ -5,13 +5,14 @@ using System.Text;
 
 namespace LittleJohnsHutsPizzaPie.Functions
 {
+
+
+
     public class Searching
     {
-      
-
-        public static string SearchingByName(List<User> list, string input)
-        {
-            
+        
+    public string SearchingByName(List<User> list, string input)
+    {
             string found = "";
             foreach (var item in list)
             {
@@ -22,8 +23,13 @@ namespace LittleJohnsHutsPizzaPie.Functions
             }
             return found;
         }
+    //public string SearchingByName(List<User> list, string input)
+    //{
 
-        public static List<Order> DisplayOrderByUser(List<Order> list, List<User> user)
+
+    //}
+
+    public List<Order> DisplayOrderByUser(List<Order> list, List<User> user)
         {
             List<Order> OrdersByUser = new List<Order>();
             foreach (var item in list)
@@ -47,7 +53,7 @@ namespace LittleJohnsHutsPizzaPie.Functions
 
             return OrdersByUser;
         }
-        public static List<Order> DisplayOrderInLocation(List<Order> list, List<Location> loc)
+        public List<Order> DisplayOrderInLocation(List<Order> list, List<Location> loc)
         {
             List<Order> OrdersByLocation = new List<Order>();
             foreach (var item in list)
@@ -70,5 +76,8 @@ namespace LittleJohnsHutsPizzaPie.Functions
             }
             return OrdersByLocation;
         }
+
+       }
     }
-}
+   
+

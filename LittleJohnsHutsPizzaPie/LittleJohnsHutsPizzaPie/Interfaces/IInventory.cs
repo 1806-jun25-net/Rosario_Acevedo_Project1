@@ -4,10 +4,10 @@ using System.Text;
 
 namespace LittleJohnsHutsPizzaPie.Interfaces
 {
-    interface ILocation
+    interface IInventory
     {
-        string address { get; set; }
         int ID { get; set; }
-        Models.Inventory inventory { get; set; }
+        string NameOfTheProduct { get; set; }
+        int Quantity { get; set; }
     }
 }

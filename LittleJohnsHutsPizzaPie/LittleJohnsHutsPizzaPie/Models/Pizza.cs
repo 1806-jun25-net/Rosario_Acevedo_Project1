@@ -9,7 +9,8 @@ namespace LittleJohnsHutsPizzaPie.Models
     {
         public bool cheese { get; set ; }
         public string crust { get ; set ; }
-        public string topping { get ; set ; }
-
+        public string Sauce { get; set; }
+        public Ingridiante topping { get ; set ; }
+        
     }
 }

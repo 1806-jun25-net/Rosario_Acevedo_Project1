@@ -6,9 +6,10 @@ namespace LittleJohnsHutsPizzaPie.Interfaces
 {
     interface IOrder
     {
-        string location { get; set; }
-        string user { get; set; }
-        DateTime DateOrder { get; }
+        Models.Location location { get; set; }
+        Models.User user { get; set; }
+        DateTime DateOrder { get; set; }
+        Models.Pizza pizza { get; set; }
         decimal price { get; set; }
         int PizzaCount { get; set; }
     }

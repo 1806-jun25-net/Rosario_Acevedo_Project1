@@ -8,7 +8,7 @@ namespace LittleJohnsHutsPizzaPie.Interfaces
     {
         bool cheese { get; set; }
         string crust { get; set; }
-        string topping { get; set; }
+        Models.Ingridiante topping { get; set; }
 
     }
 }
