@@ -18,5 +18,45 @@ namespace TestingUnit
             string found = Searching.SearchingByName(order, "John");
 
         }
+        [Fact]
+        public void testDisplayByUser()
+        {
+
+        }
+        [Fact]
+        public void testDisplayInLocation()
+        {
+
+        }
+        [Fact]
+        public void testOrderMostExpencive()
+        {
+
+        }
+        [Fact]
+        public void TestOrderCheapest()
+        {
+
+        }
+        [Fact]
+        public void TestOrderLatest()
+        {
+
+        }
+        [Fact]
+        public void TestOrderEarliest()
+        {
+
+        }
+        [Fact]
+        public void TestSerilization()
+        {
+
+        }
+        [Fact]
+        public void TestDeSerilization()
+        {
+
+        }
     }
 }
