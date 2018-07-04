@@ -9,6 +9,36 @@ namespace LittleJohnsHutsPizzaPie.XML
 {
     public class Serilizer
     {
+        public void SerilizeInventory(string fileName, List<Inventory> obj)
+        {
+            var Serial = new XmlSerializer(typeof(List<Inventory
+                >));
+
+            FileStream fs = null;
+            Console.WriteLine("inside the method");
+            try
+            {
+                fs = new FileStream(fileName, FileMode.Create);
+                Serial.Serialize(fs, obj);
+
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine($"Path not found: {e.Message}");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Unexpected error: {e.Message}");
+            }
+            finally
+            {
+                if (fs != null)
+                {
+                    fs.Dispose();
+                }
+            }
+
+        }
         public void SerilizerOrder(string fileName, List<Order> obj)
         {
             var Serial = new XmlSerializer(typeof(List<Order

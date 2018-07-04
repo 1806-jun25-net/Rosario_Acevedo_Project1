@@ -12,11 +12,11 @@ namespace LittleJohnsHutsPizzaPie.Models
                 Name = "Pizza with " + topping.NameOfTheProduct;
             }
         }
-        public bool cheese { get; set ; }
+        
         public string crust { get ; set ; }
         public string Sauce { get; set; }
         public Inventory topping { get ; set ; }
         public Order order { get ; set ; }
-        public int IDofThePizza { get { return IDofThePizza; } set {IDofThePizza += 1; } }
+        public int IDofThePizza { get; set; }
     }
 }

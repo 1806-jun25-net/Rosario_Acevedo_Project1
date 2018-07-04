@@ -8,6 +8,6 @@ namespace LittleJohnsHutsPizzaPie.Interfaces
     {
         string address { get; set; }
         int IDofLocationStore { get; set; }
-        Models.Inventory inventory { get; set; }
+        List<Models.Inventory> inventory { get; set; }
     }
 }

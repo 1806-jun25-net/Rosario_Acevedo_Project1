@@ -10,12 +10,9 @@ namespace LittleJohnsHutsPizzaPie.Models
         public string address { get; set; }
         public int IDofLocationStore
         {
-            get { return IDofLocationStore; }
-            set
-            {
-                IDofLocationStore += 1;
-            }
-        }
-        public Inventory inventory { get; set; }
+            get;
+            set;
+                  }
+        public List<Inventory> inventory { get; set; }
     }
 }

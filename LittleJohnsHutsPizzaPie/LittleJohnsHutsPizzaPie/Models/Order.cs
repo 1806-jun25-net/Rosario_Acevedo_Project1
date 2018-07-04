@@ -7,7 +7,7 @@ namespace LittleJohnsHutsPizzaPie.Models
 {
     public class Order : IOrder
     {
-        public int IDforTheOrder { get { return IDforTheOrder; } set { IDforTheOrder += 1; } }
+        public string IDforTheOrder { get; set; }
         public Location location { get ; set; }
         public User user { get ; set ; }
         public decimal price { get { return price; } set { if (value > 0 && value < 501) { price = value; } }  }

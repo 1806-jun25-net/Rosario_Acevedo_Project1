@@ -9,28 +9,15 @@ namespace LittleJohnsHutsPizzaPie.Models
     {
         public int IDofProduct
         {
-            get { return IDofProduct; }
-            set
-            {
-                IDofProduct += 1;
-            }
+            get;
+            set;
+            
         }
         public string NameOfTheProduct { get; set; }
         public int Quantity
         {
-            get { return Quantity; }
-            set
-            {
-                if (value > 0)
-                {
-                    Quantity = value;
-                }
-                else
-                {
-                    Quantity = 0;
-                }
-
-            }
+            get;
+            set;
         }
     }
 }

@@ -6,7 +6,8 @@ namespace LittleJohnsHutsPizzaPlace
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            DisplayClasses dis = new DisplayClasses();
+            dis.FirstMenuAsync();
         }
     }
 }
