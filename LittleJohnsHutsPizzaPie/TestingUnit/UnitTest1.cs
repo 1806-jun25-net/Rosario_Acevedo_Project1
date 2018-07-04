@@ -19,31 +19,11 @@ namespace TestingUnit
             string found =  Search.SearchingByName(order, "John");
 
         }
-        [Fact]
-        public void testDisplayByUser()
-        {
-            Searching DisplayUser = new Searching();
-            DeSerilizer Des = new DeSerilizer();
-        
-            List<Order> orderFromXML = Des.DesOrder("DataOrder.XML");
-            List<User> UserFromXML = Des.DesUser("DataUser.XML");
-            List<Order> OrderToDisplay = DisplayUser.DisplayOrderByUser(orderFromXML, UserFromXML);
-        }
-        [Fact]
-        public void testDisplayInLocation()
-        {
-            Searching DisplayLocation = new Searching();
-            DeSerilizer Des = new DeSerilizer();
-           
-            List<Order> orderFromXML = Des.DesOrder("DataOrder.XML");
-            List<Location> LocationFromXML = Des.DesLocation("DataLocation.XML"); 
-
-
-        }
+       
         [Fact]
         public void testOrderMostExpencive()
         {
-           var 
+            
 
         }
         [Fact]

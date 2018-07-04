@@ -8,26 +8,47 @@ namespace LittleJohnsHutsPizzaPie.Functions
 {
     public class Sorting
     {
-        public  IEnumerable<Order> OrderEarlest(List<Order> list)
+        public void OutPutStreamforOrders (IEnumerable<Order> list, List<Pizza> pizza)
         {
-            var ListOrderEarlest = list.OrderBy(x => x.DateOrder);
+            foreach (var item in list)
+            {
+                Console.WriteLine("Order by" + item.user.firstName + " " + item.user.LastName +
+                    "\nDate Order: " + item.DateOrder + "" +
+                    "\nLocaton: " + item.location.address +
+                    "\nPizzaCount: " + item.PizzaCount +
+                    "\n And your Pizzas where the following: ");
+                foreach (var item2 in pizza)
+                {
+                    if (item2.order.IDforTheOrder == item.IDforTheOrder)
+                    {
+                        Console.WriteLine(item2.Name);
+                    }
+                }
+                Console.WriteLine("Total Cost: " + item.price);
+            }
+        }
+        public void OrderEarlest(List<Order> list, List<Pizza> pizza)
+        {
+            var ListOrder = list.OrderBy(x => x.DateOrder);
+            OutPutStreamforOrders(ListOrder, pizza); 
+             
+        }
+        public void OrderLatest(List<Order> list, List<Pizza> pizza)
+        {
+            var ListOrder = list.OrderByDescending(x => x.DateOrder);
+            OutPutStreamforOrders(ListOrder, pizza);
 
-            return ListOrderEarlest;
         }
-        public IEnumerable<Order> OrderLatest(List<Order> list)
+        public void OrderChepest(List<Order> list, List<Pizza> pizza)
         {
-            var ListOrderLatest = list.OrderByDescending(x => x.DateOrder);
-            return ListOrderLatest;
+           var ListOrder = list.OrderByDescending(x => x.price);
+            OutPutStreamforOrders(ListOrder, pizza);
+
         }
-        public  IEnumerable<Order> OrderChepest(List<Order> list)
+        public  void OrderMostExpencive(List<Order> list, List<Pizza> pizza)
         {
-            var OrderChepest = list.OrderByDescending(x => x.price);
-            return OrderChepest;
-        }
-        public  IEnumerable<Order> OrderMostExpencive(List<Order> list)
-        {
-            var OrderMostExpencive = list.OrderBy(x => x.price);
-            return OrderMostExpencive;
+            var ListOrder = list.OrderBy(x => x.price);
+            OutPutStreamforOrders(ListOrder, pizza);
         }
 
     }

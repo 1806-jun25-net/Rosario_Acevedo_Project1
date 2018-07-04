@@ -7,8 +7,15 @@ namespace LittleJohnsHutsPizzaPie.Models
 {
     public class Location : ILocation
     {
-        public string address { get ; set ; }
-        public int ID { get; set ; } 
-        public Inventory inventory { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string address { get; set; }
+        public int IDofLocationStore
+        {
+            get { return IDofLocationStore; }
+            set
+            {
+                IDofLocationStore += 1;
+            }
+        }
+        public Inventory inventory { get; set; }
     }
 }

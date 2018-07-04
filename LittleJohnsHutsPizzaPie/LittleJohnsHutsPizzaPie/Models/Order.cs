@@ -7,12 +7,12 @@ namespace LittleJohnsHutsPizzaPie.Models
 {
     public class Order : IOrder
     {
+        public int IDforTheOrder { get { return IDforTheOrder; } set { IDforTheOrder += 1; } }
         public Location location { get ; set; }
         public User user { get ; set ; }
         public decimal price { get { return price; } set { if (value > 0 && value < 501) { price = value; } }  }
         public int PizzaCount { get { return PizzaCount; }  set { if (value > 0 && value < 13) { PizzaCount = value; } }  }
-        public Pizza pizza { get; set; }
-
+        
         public DateTime DateOrder
         {
             get
@@ -24,5 +24,7 @@ namespace LittleJohnsHutsPizzaPie.Models
                 DateOrder = DateTime.Now;
             }
         }
+
+      
     }
 }

@@ -1,5 +1,6 @@
 ﻿using LittleJohnsHutsPizzaPie.Models;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 
@@ -10,9 +11,9 @@ namespace LittleJohnsHutsPizzaPie.Functions
 
     public class Searching
     {
-        
-    public string SearchingByName(List<User> list, string input)
-    {
+
+        public string SearchingByName(List<User> list, string input)
+        {
             string found = "";
             foreach (var item in list)
             {
@@ -23,61 +24,22 @@ namespace LittleJohnsHutsPizzaPie.Functions
             }
             return found;
         }
-    //public string SearchingByName(List<User> list, string input)
-    //{
-
-
-    //}
-
-    public List<Order> DisplayOrderByUser(List<Order> list, List<User> user)
+        public void DisplalyByUser(List<Order> order)
         {
-            List<Order> OrdersByUser = new List<Order>();
-            foreach (var item in list)
+            foreach(var item in order)
             {
-                foreach (var item2 in user)
-                {
-                    if (item.user == item2.firstName)
-                    {
-                        OrdersByUser.Add(new Order
-                        {
-                            location = item.location,
-                            user = item.user,
-                            PizzaCount = item.PizzaCount,
-                            
-                            price = item.price
-
-                        });
-                    }
-                }
+                Console.WriteLine(item.user.firstName);
             }
-
-            return OrdersByUser;
         }
-        public List<Order> DisplayOrderInLocation(List<Order> list, List<Location> loc)
+        public void DisplayByLocation(List<Order> order)
         {
-            List<Order> OrdersByLocation = new List<Order>();
-            foreach (var item in list)
+            foreach(var item in order)
             {
-                foreach (var item2 in loc)
-                {
-                    if (item.location == item2.address)
-                    {
-                        OrdersByLocation.Add(new Order
-                        {
-                            location = item.location,
-                            user = item.user,
-                            PizzaCount = item.PizzaCount,
-                            
-                            price = item.price
-
-                        });
-                    }
-                }
+                Console.WriteLine(item.location.address);
             }
-            return OrdersByLocation;
         }
 
-       }
     }
-   
+}
+
 

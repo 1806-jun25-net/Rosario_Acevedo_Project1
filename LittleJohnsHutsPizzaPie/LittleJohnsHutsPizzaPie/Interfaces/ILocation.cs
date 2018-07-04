@@ -7,7 +7,7 @@ namespace LittleJohnsHutsPizzaPie.Interfaces
     interface ILocation
     {
         string address { get; set; }
-        int ID { get; set; }
+        int IDofLocationStore { get; set; }
         Models.Inventory inventory { get; set; }
     }
 }

@@ -6,8 +6,9 @@ namespace LittleJohnsHutsPizzaPie.Interfaces
 {
     interface IUser
     {
+        int IDofTheUser { get; set; }
         string firstName { get; set; }
         string LastName { get; set; }
-        string location { get; set; }
+        Models.Location location { get; set; }
     }
 }

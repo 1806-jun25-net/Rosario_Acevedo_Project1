@@ -6,7 +6,7 @@ namespace LittleJohnsHutsPizzaPie.Interfaces
 {
     interface IInventory
     {
-        int ID { get; set; }
+        int IDofProduct { get; set; }
         string NameOfTheProduct { get; set; }
         int Quantity { get; set; }
     }
