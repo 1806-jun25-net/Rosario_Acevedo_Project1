@@ -1,11 +1,12 @@
 using LittleJohnsHutsPizzaPie.Models;
 using LittleJohnsHutsPizzaPie.Functions;
+
 using LittleJohnsHutsPizzaPie.XML;
 using System;
 using System.Linq;
 using System.Collections.Generic;
 using Xunit;
-
+using LittleJohnsHutsPizzaPlace;
 
 namespace TestingUnit
 {
@@ -30,7 +31,8 @@ namespace TestingUnit
         [Fact]
         public void TestOrderCheapest()
         {
-
+            DisplayClasses dis = new DisplayClasses();
+            dis.FirstMenuAsync();
         }
         [Fact]
         public void TestOrderLatest()

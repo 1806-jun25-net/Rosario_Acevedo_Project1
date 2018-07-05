@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LittleJohnsHutsPizzaPie\LittleJohnsHutsPizzaPie.csproj" />
+    <ProjectReference Include="..\LittleJohnsHutsPizzaPlace\LittleJohnsHutsPizzaPlace.csproj" />
   </ItemGroup>
 
 </Project>

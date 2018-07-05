@@ -10,19 +10,13 @@ namespace LittleJohnsHutsPizzaPie.Models
         public string IDforTheOrder { get; set; }
         public Location location { get ; set; }
         public User user { get ; set ; }
-        public decimal price { get { return price; } set { if (value > 0 && value < 501) { price = value; } }  }
-        public int PizzaCount { get { return PizzaCount; }  set { if (value > 0 && value < 13) { PizzaCount = value; } }  }
+        public decimal price { get;  set ;  }
+        public int PizzaCount { get; set; }
         
         public DateTime DateOrder
         {
-            get
-            {
-                return DateOrder;
-            }
-            set
-            {
-                DateOrder = DateTime.Now;
-            }
+            get;
+            set;
         }
 
       

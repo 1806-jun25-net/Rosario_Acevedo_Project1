@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace LittleJohnsHutsPizzaPlace
 {
-    class DisplayClasses
+    public class DisplayClasses
     {
         internal List<User> Session = new List<User>();
         internal DeSerilizer des = new DeSerilizer();
@@ -18,7 +18,10 @@ namespace LittleJohnsHutsPizzaPlace
         internal Sorting sort = new Sorting();
 
 
+        public void populate()
+        {
 
+        }
         public void LocationsInventoryStartingLoader()
         {
             var Inventory = new List<Inventory>();
@@ -137,6 +140,7 @@ namespace LittleJohnsHutsPizzaPlace
 
                 });
                 ser.SerilizerUser("UserDate.XML", AllUser);
+                AllUser = new List<User>();
             }
             
            
@@ -148,6 +152,14 @@ namespace LittleJohnsHutsPizzaPlace
         {
             Task<IEnumerable<User>> taskUser = des.DesUser("UserDate.XML");
             IEnumerable<User> resultUser = new List<User>();
+            try { resultUser = taskUser.Result; }
+            catch (Exception e) { Console.WriteLine(e.Message); }
+            return resultUser;
+        }
+        public IEnumerable<Location> GetAllLocaitonFromFile()
+        {
+            Task<IEnumerable<Location>> taskUser = des.DesLocation("LocationDate.XML");
+            IEnumerable<Location> resultUser = new List<Location>();
             try { resultUser = taskUser.Result; }
             catch (Exception e) { Console.WriteLine(e.Message); }
             return resultUser;
@@ -216,10 +228,10 @@ namespace LittleJohnsHutsPizzaPlace
                 default:
                     RegisterNameAsync();
                     break;
-            } SecondMenu();
+            } SecondMenuAsync();
           
         }
-        public void SecondMenu()
+        public void SecondMenuAsync()
         {
             var AllOrder = new List<Order>();
             AllOrder.AddRange(GetAllOrderFromFile());
@@ -239,7 +251,7 @@ namespace LittleJohnsHutsPizzaPlace
             switch (input.ToUpper())
             {
                 case "1":
-                    OrderingPizzaPies();
+                    OrderingPizzaPiesAsync();
                     break;
                 case "2":
                   
@@ -249,7 +261,7 @@ namespace LittleJohnsHutsPizzaPlace
                     if (!UserList.Any())
                     {
                         Console.WriteLine("No Name Regiser by that name");
-                        SecondMenu();
+                        SecondMenuAsync();
                     }
                     else
                     {
@@ -261,7 +273,7 @@ namespace LittleJohnsHutsPizzaPlace
                         }
                     }
                     
-                    SecondMenu();
+                    SecondMenuAsync();
                     break;
                 case "3":
                    
@@ -271,7 +283,7 @@ namespace LittleJohnsHutsPizzaPlace
                     if (!ordersList.Any())
                     {
                         Console.WriteLine("No Name Regiser by that name");
-                        SecondMenu();
+                        SecondMenuAsync();
                     }
                     else
                     {
@@ -288,7 +300,7 @@ namespace LittleJohnsHutsPizzaPlace
                     search.DisplayByLocation(AllOrder);
                     break;
                 case "5":
-
+                    search.DisplalyByUser(AllOrder);
                     break;
                 case "6":
                     SortingMenu();
@@ -298,7 +310,7 @@ namespace LittleJohnsHutsPizzaPlace
                     break;
                 default:
                     Console.WriteLine("wrong input try agian");
-                    SecondMenu();
+                    SecondMenuAsync();
                     break;
 
 
@@ -336,7 +348,7 @@ namespace LittleJohnsHutsPizzaPlace
 
                     break;
                 case "r":
-                    SecondMenu();
+                    SecondMenuAsync();
                     break;
                 case "x":
                     Exit();
@@ -348,11 +360,95 @@ namespace LittleJohnsHutsPizzaPlace
             }
         }
 
-        private void OrderingPizzaPies()
+        private void OrderingPizzaPiesAsync()
         {
-            throw new NotImplementedException();
-        }
 
+            List<Order> NewOrder = new List<Order>();
+            Console.WriteLine("Please insert The location where you want to order from:\n" +
+                "1. Reston \n" +
+                "2. Florida \n" +
+                "3. Washington \n" +
+                "4. X to exit \n " +
+                "5. R to Return");
+            var input = Console.ReadLine();
+            string loc = "";
+            if (input == "1" || input == "Reston")
+            {
+                loc = "Reston";
+            }
+            else if (input == "2" || input == "Florida")
+            {
+                loc = "Florida";
+            }
+            else if (input == "3" || input == "Washington")
+            {
+                loc = "Washington";
+            }else if (input.ToUpper()== "R")
+            {
+                SecondMenuAsync();
+            }else if (input.ToUpper() == "X")
+            {
+                Exit();
+            }
+            else
+            {
+                Console.WriteLine("Wrong Input Try Again");
+                OrderingPizzaPiesAsync();
+            }
+            int n;
+            bool isNumeric = false;
+            do
+            {
+                Console.WriteLine("How many Pizzas do you want (Max is 12) press R to return and X to Exit");
+                string pizzaCount = Console.ReadLine();
+
+                isNumeric = int.TryParse(pizzaCount, out n);
+                Console.WriteLine(n);
+                Console.WriteLine(isNumeric);
+                if (n < 12)
+                {
+                    isNumeric = true;
+                }
+                else if(n > 0)
+                {
+                    isNumeric = true;
+                }
+                else if (pizzaCount.ToUpper() == "R")
+                {
+                    SecondMenuAsync();
+                }
+                else if (pizzaCount.ToUpper() == "X")
+                {
+                    Exit();
+                }
+
+
+            } while (!isNumeric);
+
+            decimal cost = Convert.ToDecimal( 6 * n * 0.6);
+            DateTime today = DateTime.Now;
+
+            
+            List<Location> AllLocations = new List<Location>();
+            AllLocations.AddRange(GetAllLocaitonFromFile());
+            List<Location> FoundLoc = search.SearchingByLocation(AllLocations, loc);
+           
+            NewOrder.Add(new Order
+            {
+                
+              
+                DateOrder = today,
+               price = cost,
+                PizzaCount = n,
+                location = (Location)((FoundLoc.ToArray())[0]),
+                user = (User) ((Session.ToArray())[0])
+            });
+            ser.SerilizerOrder("OrderDate.XML", NewOrder);
+            Console.ReadLine();
+
+        }
+        
+        
         public void SessionOutPut(List<User> users)
         {
             foreach (var item in users)
