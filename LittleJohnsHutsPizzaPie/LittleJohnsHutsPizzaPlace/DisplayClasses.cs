@@ -336,16 +336,16 @@ namespace LittleJohnsHutsPizzaPlace
             switch (input.ToLower())
             {
                 case "1":
-                   // sort.OrderEarlest(AllOrder);
+                  //  sort.OrderEarlest()
                     break;
                 case "2":
-
+                    // sort.OrderLatest()
                     break;
                 case "3":
-
+                    // sort.OrderCheapest()
                     break;
                 case "4":
-
+                    // sort.OrderMostExpecive
                     break;
                 case "r":
                     SecondMenuAsync();
@@ -445,6 +445,12 @@ namespace LittleJohnsHutsPizzaPlace
             });
             ser.SerilizerOrder("OrderDate.XML", NewOrder);
             Console.ReadLine();
+            List<Pizza> pizzas = new List<Pizza>();
+            Console.WriteLine("Please Enter your");
+            for (int i=0; i > n; i++)
+            {
+
+            }
 
         }
         
