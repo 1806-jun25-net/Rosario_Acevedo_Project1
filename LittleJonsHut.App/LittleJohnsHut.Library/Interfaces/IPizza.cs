@@ -13,6 +13,6 @@ namespace LittleJohnsHut.Library.Interfaces
         string Sauce { get; set; }
         string SizeOfPizza { get; set; }
         string NameOfTooping { get; set; }
-        Order Order { get; set; }
+        List<Order> Order { get; set; }
     }
 }

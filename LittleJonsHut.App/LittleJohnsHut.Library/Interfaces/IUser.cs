@@ -11,8 +11,8 @@ namespace LittleJohnsHut.Library.Interfaces
         string FirstName { get; set; }
         string UserName { get; set; }
         string LastName { get; set; }
-        Location Location { get; set; }
+        Location location { get; set; }
 
-        List<Order> Orders { get; set; }
+        List<Order> Order { get; set; }
     }
 }

@@ -13,6 +13,6 @@ namespace LittleJohnsHut.Library.Model
         public string Sauce { get; set; }
         public string SizeOfPizza { get; set; }
         public string NameOfTooping { get; set; }
-        public Order Order { get; set; }
+        public List<Order> Order { get; set; }
     }
 }
