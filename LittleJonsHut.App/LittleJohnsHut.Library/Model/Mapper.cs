@@ -23,7 +23,8 @@ namespace LittleJohnsHut.Library.Model
             LastName = user.LastName, 
             Id = user.Id, 
             Orders = Map(user.Order).ToList(), 
-            UserName = user.UserName
+            UserName = user.UserName 
+            
         };
         public static Order Map(Orders order) => new Order
         {
