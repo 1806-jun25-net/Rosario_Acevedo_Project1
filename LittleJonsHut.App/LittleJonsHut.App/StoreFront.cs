@@ -13,9 +13,18 @@ namespace LittleJohnsHut.App
     {
         public static void Main(string[] args)
         {
+
+            StoreFront repo = new StoreFront();
+           
+            
+            Console.WriteLine( repo.Builder().DisplayLocation().ToArray()[0].AdressLine1);
+            Console.ReadLine();
+        }
+        public Repository Builder()
+        {
             var builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                            .SetBasePath(Directory.GetCurrentDirectory())
+                            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
             IConfigurationRoot configuration = builder.Build();
 
@@ -23,13 +32,7 @@ namespace LittleJohnsHut.App
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("DataBaseConnection"));
             var repo = new Repository(new LitteJohnsDBContext(optionsBuilder.Options));
 
-            var Location = repo.DisplayLocation();
-            foreach (var item in Location)
-            {
-                Console.WriteLine($"Name {item.AdressLine1}," +
-                    $" genre {item.Id}");
-            }
-            Console.ReadLine();
+            return repo;
         }
     }
 }

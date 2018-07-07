@@ -47,6 +47,8 @@ namespace LittleJohnsHut.DBAccess
                     .IsRequired()
                     .HasMaxLength(250);
 
+                entity.Property(e => e.PriceOfInventory).HasColumnType("money");
+
                 entity.HasOne(d => d.IdNavigation)
                     .WithOne(p => p.InverseIdNavigation)
                     .HasForeignKey<Inventory>(d => d.Id)
@@ -122,7 +124,7 @@ namespace LittleJohnsHut.DBAccess
                     .IsRequired()
                     .HasMaxLength(250);
 
-                entity.Property(e => e.SizeOfPizza).HasMaxLength(1);
+                entity.Property(e => e.SizeOfPizza).HasMaxLength(250);
 
                 entity.HasOne(d => d.IdNavigation)
                     .WithOne(p => p.InverseIdNavigation)

@@ -14,6 +14,7 @@ namespace LittleJohnsHut.DBAccess
         public string NameOfProduct { get; set; }
         public int Quantity { get; set; }
         public int LocationId { get; set; }
+        public decimal PriceOfInventory { get; set; }
 
         public Inventory IdNavigation { get; set; }
         public Locations Location { get; set; }

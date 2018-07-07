@@ -40,7 +40,7 @@ namespace LittleJohnsHut.Library.Repository
         public IEnumerable<Location> DisplayLocation()
         {
 
-           // List<Locations> Location =  _db.Locations.AsNoTracking().ToList();
+          
             return Mapper.Map(_db.Locations.AsNoTracking()).ToList();
         }
         public IEnumerable<Order> DisplayOrderLocation()
@@ -54,6 +54,36 @@ namespace LittleJohnsHut.Library.Repository
             if (user == null) { throw new ArgumentException("Wrong input, this person does not exist in the database"); }
 
             yield return Mapper.Map(user);
+        }
+     
+        public IEnumerable<Order> DiplayEarliest()
+        {
+            List<Order> ord = DisplayOrder().OrderBy(o => o.OrderDate).ToList();
+
+            return ord;
+        }
+        public IEnumerable<Order> DiplayLatest()
+        {
+            List<Order> ord = DisplayOrder().OrderByDescending(o => o.OrderDate).ToList();
+
+            return ord;
+        }
+        public IEnumerable<Order> DiplayMostExpencive()
+        {
+            List<Order> ord = DisplayOrder().OrderBy(o => o.Price).ToList();
+
+            return ord;
+        }
+        public IEnumerable<Order> DiplayCheapest()
+        {
+            List<Order> ord = DisplayOrder().OrderByDescending(o => o.Price).ToList();
+
+            return ord;
+        }
+        public IEnumerable<Order> DisplayOrder()
+        {
+            List<Orders> order = _db.Orders.AsNoTracking().ToList();
+            return Mapper.Map(order);
         }
         public IEnumerable<Order> DisplayOrderUser()
         {

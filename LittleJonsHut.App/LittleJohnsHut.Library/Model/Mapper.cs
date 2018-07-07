@@ -96,14 +96,23 @@ namespace LittleJohnsHut.Library.Model
 
         };
 
+        public static IEnumerable<Order> Map(IEnumerable<Orders> order) => order.Select(Map);
+        public static IEnumerable<Orders> Map(IEnumerable<Order> order) => order.Select(Map);
+
 
         public static IEnumerable<Location> Map(IEnumerable<Locations> location)  => location.Select(Map);
         public static IEnumerable<Locations> Map (IEnumerable <Location> location)  => location.Select(Map);
+
+
         public static IEnumerable<Inventory> Map(IEnumerable<DBAccess.Inventory> inventories) => inventories.Select(Map);
         public static IEnumerable<DBAccess.Inventory> Map(IEnumerable<Inventory> inventories) => inventories.Select(Map);
+
+
         public static IEnumerable<User> Map(IEnumerable<Users> users) => users.Select(Map);
         public static IEnumerable<Users> Map(IEnumerable<User> user) => user.Select(Map);
-        public static IEnumerable<Order> Map(IEnumerable<Orders> order) => order.Select(Map);
-        public static IEnumerable<Orders> Map(IEnumerable<Order> order) => order.Select(Map);
+
+
+        public static IEnumerable<Pizza> Map(IEnumerable<DBAccess.Pizza> piz) => piz.Select(Map);
+        public static IEnumerable<DBAccess.Pizza> Map(IEnumerable<Pizza> piz) => piz.Select(Map);
     }
 }

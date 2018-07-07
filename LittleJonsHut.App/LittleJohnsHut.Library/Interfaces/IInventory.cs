@@ -11,6 +11,7 @@ namespace LittleJohnsHut.Library.Interfaces
         int Id { get; set; }
         string NameOfProduct { get; set; }
         int Quantity { get; set; }
+        decimal PriceOfInventory { get; set; }
         Location Location { get; set; }
     }
 }
