@@ -13,6 +13,7 @@ namespace LittleJohnsHut.Library.Model
             FirstName = users.FirstName,
             LastName = users.LastName, 
             Id = users.Id,  
+            locationID = users.LocationId,
             Order = Map(users.Orders).ToList(),
             UserName = users.UserName 
         };
@@ -21,18 +22,22 @@ namespace LittleJohnsHut.Library.Model
         {
             FirstName = user.FirstName, 
             LastName = user.LastName, 
-            Id = user.Id, 
+            Id = user.Id,
+            LocationId = user.locationID,
             Orders = Map(user.Order).ToList(), 
             UserName = user.UserName 
             
         };
         public static Order Map(Orders order) => new Order
         {
-            OrderDate = order.OrderDate, 
-            Id = order.Id, 
+            OrderDate = order.OrderDate,
+            Id = order.Id,
             Price = order.Price,
-            PizzaCount = order.PizzaCount
-             
+            PizzaCount = order.PizzaCount,
+
+            locationId = order.LocationId,
+           UserId = order.UserId
+
         };
 
         public static Orders Map(Order order) => new Orders
@@ -40,20 +45,26 @@ namespace LittleJohnsHut.Library.Model
             OrderDate = order.OrderDate,
             Id = order.Id,
             Price = order.Price,
-            PizzaCount = order.PizzaCount
+            PizzaCount = order.PizzaCount,
+            LocationId = order.locationId, 
+            UserId = order.UserId
         };
         public static Inventory Map(DBAccess.Inventory inventory) => new Inventory
         {
             Id = inventory.Id, 
            NameOfProduct = inventory.NameOfProduct, 
            Quantity = inventory.Quantity,
+           PriceOfInventory = inventory.PriceOfInventory, 
+          
     
         };
         public static DBAccess.Inventory Map(Inventory inventory) => new DBAccess.Inventory
         {
             Id = inventory.Id, 
             NameOfProduct = inventory.NameOfProduct, 
-            Quantity = inventory.Quantity
+            Quantity = inventory.Quantity,
+            PriceOfInventory = inventory.PriceOfInventory,
+           
         };
         public static Location Map(Locations locations) => new Location
         {
@@ -85,6 +96,7 @@ namespace LittleJohnsHut.Library.Model
             SizeOfPizza = pizza.SizeOfPizza, 
             Sauce = pizza.Sauce,
             
+            
         };
         public static DBAccess.Pizza Map(Pizza pizza) => new DBAccess.Pizza
         {
@@ -93,6 +105,7 @@ namespace LittleJohnsHut.Library.Model
             NameofPizza = pizza.NameofPizza,
             SizeOfPizza = pizza.SizeOfPizza,
             Sauce = pizza.Sauce,
+            
 
         };
 

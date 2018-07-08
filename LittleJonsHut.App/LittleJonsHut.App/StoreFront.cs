@@ -13,13 +13,28 @@ namespace LittleJohnsHut.App
     {
         public static void Main(string[] args)
         {
+            var builder = new ConfigurationBuilder()
+                        .SetBasePath(Directory.GetCurrentDirectory())
+                        .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
-            StoreFront repo = new StoreFront();
-           
-            
-            Console.WriteLine( repo.Builder().DisplayLocation().ToArray()[0].AdressLine1);
-            Console.ReadLine();
+            IConfigurationRoot configuration = builder.Build();
+
+            var optionsBuilder = new DbContextOptionsBuilder<LitteJohnsDBContext>();
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString("DataBaseConnection"));
+            var repo = new Repository(new LitteJohnsDBContext(optionsBuilder.Options));
+
+
+         
+           Menus m = new Menus();
+            m.StartingMenu();
+
         }
+
+
+
+
+
+
         public Repository Builder()
         {
             var builder = new ConfigurationBuilder()

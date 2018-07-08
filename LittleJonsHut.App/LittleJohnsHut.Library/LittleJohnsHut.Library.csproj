@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="BusinessLogic\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\LittleJohnsHut.DBAccess\LittleJohnsHut.DBAccess.csproj" />
   </ItemGroup>
 

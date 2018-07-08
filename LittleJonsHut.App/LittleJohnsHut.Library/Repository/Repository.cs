@@ -17,11 +17,30 @@ namespace LittleJohnsHut.Library.Repository
             _db = db ?? throw new ArgumentNullException(nameof(db));
         }
 
-        public void RegisterUser(string fn, string ln,string un, Locations loc)
+
+        public Model.Pizza FindPizzaByName(string input)
+        {
+            DBAccess.Pizza piz = new DBAccess.Pizza();
+            try
+            {
+                piz = _db.Pizza.FirstOrDefault(u => u.NameofPizza == input);
+            }
+            catch (ArgumentNullException e)
+            {
+                Console.WriteLine("Not found in the data base");
+            }
+            if (piz == null)
+            {
+                return null;
+            }
+
+            return Mapper.Map(piz);
+        }
+        public void RegisterUser(string fn, string ln,string un, string loc)
         {
            
            
-            var Location = _db.Users.FirstOrDefault(u =>u.Location.AdressLine1  == loc.AdressLine1 );
+            Locations Location = _db.Locations.FirstOrDefault(u =>u.AdressLine1  == loc );
             if (Location == null)
             {
                 throw new ArgumentException("Locaiton was not found", nameof(loc));
@@ -31,11 +50,21 @@ namespace LittleJohnsHut.Library.Repository
                FirstName  = fn, 
                LastName = ln, 
                UserName = un, 
-               Location = loc
-              
-            };
-            _db.Add(Mapper.Map(User));
+               LocationId = Location.Id
 
+            };
+            _db.Add(User);
+            
+        }
+        public Location FindLocationByID(int ad1)
+        {
+            var Loc = _db.Locations.FirstOrDefault(p => p.Id == ad1);
+            return Mapper.Map(Loc);
+        }
+        public Location FindLocationByAdrress(string ad1)
+        {
+            var Loc = _db.Locations.FirstOrDefault(p => p.AdressLine1 == ad1);
+            return Mapper.Map(Loc);
         }
         public IEnumerable<Location> DisplayLocation()
         {
@@ -48,14 +77,48 @@ namespace LittleJohnsHut.Library.Repository
             List<Orders> order = _db.Orders.Include(o => o.Location).AsNoTracking().ToList();
             return Mapper.Map(order);
         }
-        public IEnumerable<User> FindUserByName(string input)
-        {
-            var user = _db.Users.FirstOrDefault(u => u.FirstName == input);
-            if (user == null) { throw new ArgumentException("Wrong input, this person does not exist in the database"); }
 
-            yield return Mapper.Map(user);
+        public IEnumerable<Model.Pizza> DisplayPizza()
+        {
+            List<DBAccess.Pizza> pizza = _db.Pizza.AsNoTracking().ToList();
+            return Mapper.Map(pizza);
         }
-     
+        public User FindUserByName(string input)
+        {
+            Users user = new Users();
+            try
+            {
+                user = _db.Users.FirstOrDefault(u => u.UserName == input);
+            }
+            catch (ArgumentNullException e)
+            {
+                Console.WriteLine("Not found in the data base");
+            }
+            if (user == null)
+            {
+                return null; 
+            }
+
+            return Mapper.Map(user);
+        }
+        public Order FindUserByOrderID(int input)
+        {
+            Orders order = new Orders();
+            try
+            {
+                order = _db.Orders.FirstOrDefault(u => u.Id == input);
+            }
+            catch (ArgumentNullException e)
+            {
+                Console.WriteLine("Not found in the data base");
+            }
+            if (order == null)
+            {
+                return null;
+            }
+
+            return Mapper.Map(order);
+        }
         public IEnumerable<Order> DiplayEarliest()
         {
             List<Order> ord = DisplayOrder().OrderBy(o => o.OrderDate).ToList();
@@ -90,7 +153,7 @@ namespace LittleJohnsHut.Library.Repository
             List<Orders> order = _db.Orders.Include(o => o.User).AsNoTracking().ToList();
             return Mapper.Map(order);
         }
-        public void ordering(decimal cost, DateTime dateOfOreder, int pc, string loc, string un)
+        public void ordering(decimal cost, string dateOfOreder, int pc, string loc, string un)
         {
             var local = _db.Locations.FirstOrDefault(l => l.AdressLine1 == loc);
             var UserName = _db.Users.FirstOrDefault(u => u.UserName == un);
@@ -110,8 +173,8 @@ namespace LittleJohnsHut.Library.Repository
                 OrderDate = dateOfOreder,
                 PizzaCount = pc, 
                 Price = cost, 
-                Location = local, 
-                User = UserName
+                LocationId = local.Id, 
+                UserId = UserName.Id
 
             };
             _db.Add(order);
@@ -133,14 +196,21 @@ namespace LittleJohnsHut.Library.Repository
             var P_I = new PizzaToopingIngrediant
             {
                 InventoryId = inv.Id,
-                PizzaId = pizza.Id,
-                Pizza = pizza,
-                Inventory = inv
+                PizzaId = pizza.Id
+                
             };
             _db.Add(P_I);
             UpdatingInventroy(P_I.InventoryId);
             
         }
+        public List<Model.Inventory> findingInvetoryByLocationID(int LocationId)
+        {
+            string input = LocationId+"";
+            List<Model.Inventory> inv = Mapper.Map((from a in _db.Inventory where Convert.ToString(a.LocationId).Contains(input) select a)).ToList();
+            return inv;
+
+        }
+       
         public void UpdatingInventroy(int Id)
         {
             
@@ -152,13 +222,8 @@ namespace LittleJohnsHut.Library.Repository
             {
                 throw new ArgumentException($"No Inventroy left for {inv.NameOfProduct}");
             }
-            var invetory = new Model.Inventory{
-                Id = Id, 
-                Quantity = inv.Quantity - 1, 
-                NameOfProduct = inv.NameOfProduct,
-                Location = Mapper.Map(inv.Location), 
-                
-            };
+            inv.Quantity = inv.Quantity-1;
+           _db.Update(inv);
           
         }
         public void Save()

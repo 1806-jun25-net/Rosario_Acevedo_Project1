@@ -12,6 +12,7 @@ namespace LittleJohnsHut.Library.Model
         public string NameOfProduct { get; set; }
         public int Quantity { get; set; }
         public decimal PriceOfInventory { get; set; }
+        public int locationId { get; set; }
         public Location Location { get; set; }
     }
 }
