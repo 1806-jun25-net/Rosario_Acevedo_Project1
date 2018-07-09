@@ -2,6 +2,7 @@
 using LittleJohnsHut.Library.Model;
 using LittleJohnsHut.Library.Repository;
 using LittleJohnsHut.Library.XML;
+using LittleJohnsPizza.Library.XML;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -10,25 +11,21 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace LittleJohnsHut.App
+namespace LittleJohnsHut.Library
 {
+    /// <summary>
+    /// This class is created to take all the users input
+    /// also contins various clases that calcualte and search in the data base
+    /// </summary>
     public class Menus
     {
+        /// <summary>
+        /// Get the session of the user 
+        /// </summary>
         public User Session { get; set; }
-        public Repository Builder()
-        {
-            var builder = new ConfigurationBuilder()
-                            .SetBasePath(Directory.GetCurrentDirectory())
-                            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-
-            IConfigurationRoot configuration = builder.Build();
-
-            var optionsBuilder = new DbContextOptionsBuilder<LitteJohnsDBContext>();
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("DataBaseConnection"));
-            var repo = new Repository(new LitteJohnsDBContext(optionsBuilder.Options));
-
-            return repo;
-        }
+        /// <summary>
+        /// This class is use to Register the User  and also checks if the user has a unique Username 
+        /// </summary>
         public void Register()
         {
 
@@ -40,12 +37,12 @@ namespace LittleJohnsHut.App
 
             var optionsBuilder = new DbContextOptionsBuilder<LitteJohnsDBContext>();
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("DataBaseConnection"));
-            var repo = new Repository(new LitteJohnsDBContext(optionsBuilder.Options));
-            Console.WriteLine("Please enter your name");
+            var repo = new Repository.Repository(new LitteJohnsDBContext(optionsBuilder.Options));
+            Console.WriteLine("Please enter your First name");
             string fn = Console.ReadLine();
-            Console.WriteLine("Please enter your First Name");
+            Console.WriteLine("Please enter your Last Name");
             string ln = Console.ReadLine();
-            Console.WriteLine("Please enter a unique UserName");
+            Console.WriteLine("Please enter a Unique UserName");
             string un = Console.ReadLine();
             Console.WriteLine("Please enter a Location, here is a list of our locations");
             List<Location> loc = repo.DisplayLocation().ToList();
@@ -83,7 +80,7 @@ namespace LittleJohnsHut.App
 
             var optionsBuilder = new DbContextOptionsBuilder<LitteJohnsDBContext>();
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("DataBaseConnection"));
-            var repo = new Repository(new LitteJohnsDBContext(optionsBuilder.Options));
+            var repo = new Repository.Repository(new LitteJohnsDBContext(optionsBuilder.Options));
 
 
             Console.WriteLine("Write your User Name: ");
@@ -119,8 +116,11 @@ namespace LittleJohnsHut.App
             }
             else if (input.ToUpper() == "X")
             {
-
-                Environment.Exit(0);
+                Exit();
+            }else if (input.ToUpper() == "F")
+            {
+                FastEntry();
+                ContinuesMenu();
             }
             else
             {
@@ -129,8 +129,15 @@ namespace LittleJohnsHut.App
             }
 
         }
+        public void FastEntry()
+        {
+            DeSerilize ser = new DeSerilize();
+
+            Session = ser.DesSession("RemeberSession.XML").Result;
+        }
         public void ContinuesMenu()
         {
+            Console.WriteLine($"Welcome :{Session.FirstName} {Session.LastName}");
             Console.WriteLine($"Plese Choose a option press the number on the left of the option \n" +
                 $"1. Order your pizza\n" +
                 $"2. Sorting and adminstrating\n " +
@@ -150,7 +157,7 @@ namespace LittleJohnsHut.App
                     SearchingMenu();
                     break;
                 case "4":
-                    Environment.Exit(0);
+                    Exit();
                     break;
 
                 default:
@@ -170,7 +177,7 @@ namespace LittleJohnsHut.App
 
             var optionsBuilder = new DbContextOptionsBuilder<LitteJohnsDBContext>();
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("DataBaseConnection"));
-            var repo = new Repository(new LitteJohnsDBContext(optionsBuilder.Options));
+            var repo = new Repository.Repository(new LitteJohnsDBContext(optionsBuilder.Options));
 
             Console.WriteLine("Enter what you want to search for:" +
                 "1. Search for User" +
@@ -239,7 +246,57 @@ namespace LittleJohnsHut.App
         }
         public void SortingMenu()
         {
-            Console.WriteLine("Choose ");
+            var builder = new ConfigurationBuilder()
+                      .SetBasePath(Directory.GetCurrentDirectory())
+                      .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+            IConfigurationRoot configuration = builder.Build();
+
+            var optionsBuilder = new DbContextOptionsBuilder<LitteJohnsDBContext>();
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString("DataBaseConnection"));
+            var repo = new Repository.Repository(new LitteJohnsDBContext(optionsBuilder.Options));
+            Console.WriteLine("do you want to use your location? press Y for yes and N for no ");
+            Console.WriteLine("Choose the sort you want to implement \n" +
+                "1. Sort by order history by earliest \n" +
+                "2. Sort by order history by latest \n" +
+                "3. Sort by order history by cheapest\n" +
+                "4. Sort by order history by most expensive \n" +
+                "5. return to main menu \n" +
+                "6. exit the aplication");
+
+            string inpt = Console.ReadLine();
+            var i = new List<Order>();
+            switch (inpt)
+            {
+                case "1":
+                     i = repo.DiplayEarliest().ToList();
+                    break;
+                case "2":
+                    i = repo.DiplayLatest().ToList();
+                    break;
+                case "3":
+                    i = repo.DiplayCheapest().ToList();
+                    break;
+                case "4":
+                    i = repo.DiplayMostExpencive().ToList();
+                    break;
+                case "5":
+                    ContinuesMenu();
+                    break;
+                case "6":
+                    Exit();
+                    break;
+                default:
+                    SortingMenu();
+                    break;
+            }
+            foreach (var item in i)
+            {
+                Console.WriteLine($"Pizza in order: {item.PizzaCount}\n" +
+                    $"Price: {item.Price}\n" +
+                    $"Order Date: {item.OrderDate}");
+            }
+            ContinuesMenu();
         }
         decimal cost = Convert.ToDecimal((4 + 2.50 + 0.75) * 0.6);
         public void OrderMenu()
@@ -252,7 +309,7 @@ namespace LittleJohnsHut.App
 
             var optionsBuilder = new DbContextOptionsBuilder<LitteJohnsDBContext>();
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("DataBaseConnection"));
-            var repo = new Repository(new LitteJohnsDBContext(optionsBuilder.Options));
+            var repo = new Repository.Repository(new LitteJohnsDBContext(optionsBuilder.Options));
             Console.WriteLine("do you want to use your location? press Y for yes and N for no ");
             string input = Console.ReadLine();
             var loc = new Location();
@@ -299,12 +356,12 @@ namespace LittleJohnsHut.App
             }
             InvLocation = loc;
             cost = cost * p;
-            if (cost < 0 || cost > 501)
+            if (cost < 0 || cost > 500)
             {
                 OrderMenu();
 
             }
-            if (p < 0 || p > 13)
+            if (p <= 0 || p >= 13)
             {
                 OrderMenu();
             }
@@ -314,7 +371,7 @@ namespace LittleJohnsHut.App
                 PizzaMaker();
                 cost += cost;
             }
-            repo.ordering(cost, Convert.ToString(DO), p, loc.AdressLine1, Session.UserName);
+            repo.ordering(cost, DO, p, loc.AdressLine1, Session.UserName);
             repo.Save();
             ContinuesMenu();
         }
@@ -329,7 +386,7 @@ namespace LittleJohnsHut.App
 
             var optionsBuilder = new DbContextOptionsBuilder<LitteJohnsDBContext>();
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("DataBaseConnection"));
-            var repo = new Repository(new LitteJohnsDBContext(optionsBuilder.Options));
+            var repo = new Repository.Repository(new LitteJohnsDBContext(optionsBuilder.Options));
             Console.WriteLine("Please choose your pizza from our selection");
             var pizza = repo.DisplayPizza();
             foreach (var item in pizza)
@@ -413,6 +470,28 @@ namespace LittleJohnsHut.App
                 throw new ArgumentException($"No Such Inventroy left for this item {input}");
             }
             return inv;
+        }
+        public void Exit()
+        {
+            var builder = new ConfigurationBuilder()
+                         .SetBasePath(Directory.GetCurrentDirectory())
+                         .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+            IConfigurationRoot configuration = builder.Build();
+
+            var optionsBuilder = new DbContextOptionsBuilder<LitteJohnsDBContext>();
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString("DataBaseConnection"));
+            var repo = new Repository.Repository(new LitteJohnsDBContext(optionsBuilder.Options));
+            
+            Serilize ser = new Serilize();
+
+            ser.SerilizeInventory("BackupInventory.XML", repo.DisplayInventory().ToList() );
+            ser.SerilizerLocation("BackUpLocations.XML", repo.DisplayLocation().ToList());
+            ser.SerilizerOrder("BackUpOrder.XML", repo.DisplayOrder().ToList());
+            ser.SerilizerPizza("BackUpPizza.XML", repo.DisplayPizza().ToList());
+            ser.SerilizerUser("BackUpUser.XML",repo.DisplayUsuario().ToList());
+
+            Environment.Exit(0);
         }
 
     }

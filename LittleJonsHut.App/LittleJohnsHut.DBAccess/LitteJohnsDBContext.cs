@@ -86,7 +86,7 @@ namespace LittleJohnsHut.DBAccess
 
                 entity.Property(e => e.LocationId).HasColumnName("LocationID");
 
-                entity.Property(e => e.OrderDate).HasMaxLength(250);
+                entity.Property(e => e.OrderDate).HasColumnType("datetime");
 
                 entity.Property(e => e.Price).HasColumnType("money");
 

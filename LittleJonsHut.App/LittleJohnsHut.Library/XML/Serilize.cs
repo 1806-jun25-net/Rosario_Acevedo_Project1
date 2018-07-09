@@ -1,4 +1,5 @@
 ﻿using LittleJohnsHut.Library.Model;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,6 +10,7 @@ namespace LittleJohnsHut.Library.XML
 {
     public class Serilize
     {
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
         public void SerilizeInventory(string fileName, List<Inventory> obj)
         {
             var Serial = new XmlSerializer(typeof(List<Inventory
@@ -24,10 +26,12 @@ namespace LittleJohnsHut.Library.XML
             }
             catch (IOException e)
             {
+                logger.Error(e, "File not found");
                 Console.WriteLine($"Path not found: {e.Message}");
             }
             catch (Exception e)
             {
+                logger.Error(e, "File not found");
                 Console.WriteLine($"Unexpected error: {e.Message}");
             }
             finally
@@ -54,10 +58,12 @@ namespace LittleJohnsHut.Library.XML
             }
             catch (IOException e)
             {
+                logger.Error(e, "File not found");
                 Console.WriteLine($"Path not found: {e.Message}");
             }
             catch (Exception e)
             {
+                logger.Error(e, "File not found");
                 Console.WriteLine($"Unexpected error: {e.Message}");
             }
             finally
@@ -84,10 +90,12 @@ namespace LittleJohnsHut.Library.XML
             }
             catch (IOException e)
             {
+                logger.Error(e, "File not found");
                 Console.WriteLine($"Path not found: {e.Message}");
             }
             catch (Exception e)
             {
+                logger.Error(e, "File not found");
                 Console.WriteLine($"Unexpected error: {e.Message}");
             }
             finally
@@ -114,10 +122,12 @@ namespace LittleJohnsHut.Library.XML
             }
             catch (IOException e)
             {
+                logger.Error(e, "File not found");
                 Console.WriteLine($"Path not found: {e.Message}");
             }
             catch (Exception e)
             {
+                logger.Error(e, "File not found");
                 Console.WriteLine($"Unexpected error: {e.Message}");
             }
             finally
@@ -145,10 +155,12 @@ namespace LittleJohnsHut.Library.XML
             }
             catch (IOException e)
             {
+                logger.Error(e, "File not found");
                 Console.WriteLine($"Path not found: {e.Message}");
             }
             catch (Exception e)
             {
+                logger.Error(e, "File not found");
                 Console.WriteLine($"Unexpected error: {e.Message}");
             }
             finally
@@ -175,10 +187,12 @@ namespace LittleJohnsHut.Library.XML
             }
             catch (IOException e)
             {
+                logger.Error(e, "File not found");
                 Console.WriteLine($"Path not found: {e.Message}");
             }
             catch (Exception e)
             {
+                logger.Error(e, "File not found");
                 Console.WriteLine($"Unexpected error: {e.Message}");
             }
             finally

@@ -8,7 +8,7 @@ namespace LittleJohnsHut.Library.Interfaces
     interface IOrder
     {
         int Id { get; set; }
-        string OrderDate { get; set; }
+        DateTime? OrderDate { get; set; }
         int PizzaCount { get; set; }
         decimal Price { get; set; }
         Location Location { get; set; }

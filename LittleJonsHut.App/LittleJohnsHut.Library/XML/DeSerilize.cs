@@ -75,5 +75,21 @@ namespace LittleJohnsPizza.Library.XML
             }
 
         }
+        public async Task<User> DesSession(string fn)
+        {
+            var serial = new XmlSerializer(typeof(User));
+
+
+            using (var ms = new MemoryStream())
+            {
+                using (var fs = new FileStream(fn, FileMode.Open))
+                {
+                    await fs.CopyToAsync(ms);
+                }
+                ms.Position = 0;
+                return (User)serial.Deserialize(ms);
+            }
+
+        }
     }
 }

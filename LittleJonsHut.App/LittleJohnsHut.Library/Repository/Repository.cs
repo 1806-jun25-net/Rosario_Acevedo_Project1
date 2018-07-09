@@ -1,6 +1,7 @@
 ﻿using LittleJohnsHut.DBAccess;
 using LittleJohnsHut.Library.Model;
 using Microsoft.EntityFrameworkCore;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace LittleJohnsHut.Library.Repository
 {
     public class Repository
     {
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
         private readonly LittleJohnsHut.DBAccess.LitteJohnsDBContext _db;
 
         public Repository(LitteJohnsDBContext db)
@@ -27,6 +29,7 @@ namespace LittleJohnsHut.Library.Repository
             }
             catch (ArgumentNullException e)
             {
+                logger.Error(e,"NullPointer Error");
                 Console.WriteLine("Not found in the data base");
             }
             if (piz == null)
@@ -43,6 +46,7 @@ namespace LittleJohnsHut.Library.Repository
             Locations Location = _db.Locations.FirstOrDefault(u =>u.AdressLine1  == loc );
             if (Location == null)
             {
+                
                 throw new ArgumentException("Locaiton was not found", nameof(loc));
             }
             var User = new Users
@@ -92,6 +96,7 @@ namespace LittleJohnsHut.Library.Repository
             }
             catch (ArgumentNullException e)
             {
+                logger.Error(e, "Null Pointer Error");
                 Console.WriteLine("Not found in the data base");
             }
             if (user == null)
@@ -106,10 +111,14 @@ namespace LittleJohnsHut.Library.Repository
             Orders order = new Orders();
             try
             {
+                
+                
                 order = _db.Orders.FirstOrDefault(u => u.Id == input);
             }
             catch (ArgumentNullException e)
             {
+
+                logger.Error(e, "Null Pointer Error");
                 Console.WriteLine("Not found in the data base");
             }
             if (order == null)
@@ -148,12 +157,22 @@ namespace LittleJohnsHut.Library.Repository
             List<Orders> order = _db.Orders.AsNoTracking().ToList();
             return Mapper.Map(order);
         }
+        public IEnumerable<Model.Inventory> DisplayInventory()
+        {
+            List<DBAccess.Inventory> Inv = _db.Inventory.AsNoTracking().ToList();
+            return Mapper.Map(Inv);
+        }
+        public IEnumerable<Model.User> DisplayUsuario()
+        {
+            List<DBAccess.Users> Inv = _db.Users.AsNoTracking().ToList();
+            return Mapper.Map(Inv);
+        }
         public IEnumerable<Order> DisplayOrderUser()
         {
             List<Orders> order = _db.Orders.Include(o => o.User).AsNoTracking().ToList();
             return Mapper.Map(order);
         }
-        public void ordering(decimal cost, string dateOfOreder, int pc, string loc, string un)
+        public void ordering(decimal cost, DateTime dateOfOreder, int pc, string loc, string un)
         {
             var local = _db.Locations.FirstOrDefault(l => l.AdressLine1 == loc);
             var UserName = _db.Users.FirstOrDefault(u => u.UserName == un);
@@ -161,6 +180,7 @@ namespace LittleJohnsHut.Library.Repository
             if (local == null)
             {
                 throw new ArgumentException("Location not found", loc);
+               
             }else if (UserName == null)
             {
                 throw new ArgumentException("User Not Found", un);

@@ -9,7 +9,7 @@ namespace LittleJohnsHut.Library.Model
     public class Order : IOrder 
     {
         public int Id { get; set; }
-        public string OrderDate { get; set ; }
+        public DateTime? OrderDate { get; set ; }
         public int PizzaCount { get ; set ; }
         public decimal Price { get ; set ; }
         public int locationId { get; set; }

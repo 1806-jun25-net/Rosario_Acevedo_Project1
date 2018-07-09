@@ -11,7 +11,7 @@ namespace LittleJohnsHut.DBAccess
         }
 
         public int Id { get; set; }
-        public string OrderDate { get; set; }
+        public DateTime? OrderDate { get; set; }
         public int PizzaCount { get; set; }
         public decimal Price { get; set; }
         public int UserId { get; set; }
