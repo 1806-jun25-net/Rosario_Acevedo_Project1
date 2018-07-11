@@ -11,6 +11,11 @@ namespace LittleJohnsPizza.Library.XML
 {
     public class DeSerilize
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fn"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<Location>> DesLocation(string fn)
         {
             var serial = new XmlSerializer(typeof(List<Location>));
@@ -27,6 +32,11 @@ namespace LittleJohnsPizza.Library.XML
             }
 
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fn"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<Order>> DesOrder(string fn)
         {
             var serial = new XmlSerializer(typeof(List<Order>));
@@ -43,6 +53,11 @@ namespace LittleJohnsPizza.Library.XML
             }
 
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fn"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<Pizza>> DesPizza(string fn)
         {
             var serial = new XmlSerializer(typeof(List<Pizza>));
@@ -59,6 +74,11 @@ namespace LittleJohnsPizza.Library.XML
             }
 
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fn"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<User>> DesUser(string fn)
         {
             var serial = new XmlSerializer(typeof(List<User>));
@@ -75,6 +95,11 @@ namespace LittleJohnsPizza.Library.XML
             }
 
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fn"></param>
+        /// <returns></returns>
         public async Task<User> DesSession(string fn)
         {
             var serial = new XmlSerializer(typeof(User));

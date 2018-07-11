@@ -6,6 +6,7 @@ using LittleJohnsHut.Library.XML;
 using LittleJohnsPizza.Library.XML;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -82,7 +83,9 @@ namespace LittleJohnsHut.Library
 
 
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public void RetruningClient()
         {
             #region database
@@ -103,7 +106,7 @@ namespace LittleJohnsHut.Library
             if (users == null)
             {
                 Console.WriteLine("try Agian ");
-                RetruningClient();
+                StartingMenu ();
             }
 
             session(users);
@@ -111,11 +114,18 @@ namespace LittleJohnsHut.Library
             ContinuesMenu();
 
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="user"></param>
         public void session(User user)
         {
             Serilize ser = new Serilize();
             ser.SerilizerSession("RemeberSession.XML", user);
         }
+        /// <summary>
+        /// 
+        /// </summary>
         public void StartingMenu()
         {
             Console.WriteLine("Are you a retunring customer? press Y to Yes press N to register, press X to Exit, Press F for fast Log in");
@@ -155,7 +165,8 @@ namespace LittleJohnsHut.Library
                 $"1. Order your pizza\n" +
                 $"2. Sorting and adminstrating\n " +
                 $"3. Searching by a catagory\n" +
-                $"4. Exit your application");
+                $"4. Exit your application \n" +
+                $"5. sign out");
             string input = Console.ReadLine();
 
             switch (input)
@@ -172,7 +183,9 @@ namespace LittleJohnsHut.Library
                 case "4":
                     Exit();
                     break;
-
+                case "5":
+                    StartingMenu();
+                    break;
                 default:
                     Console.WriteLine("wrong input try agian");
                     ContinuesMenu();
@@ -180,6 +193,9 @@ namespace LittleJohnsHut.Library
             }
 
         }
+        /// <summary>
+        /// 
+        /// </summary>
         public void SearchingMenu()
         {
             #region database
@@ -194,10 +210,10 @@ namespace LittleJohnsHut.Library
             var repo = new Repository.Repository(new LitteJohnsDBContext(optionsBuilder.Options));
             #endregion
 
-            Console.WriteLine("Enter what you want to search for:" +
-                "1. Search for User" +
-                "2. Search for Order " +
-                "3. Go Back" +
+            Console.WriteLine("Enter what you want to search for:\n" +
+                "1. Search for User\n" +
+                "2. Search for Order\n " +
+                "3. Go Back\n" +
                 "4. Exit");
             string input = Console.ReadLine();
             switch (input)
@@ -262,6 +278,9 @@ namespace LittleJohnsHut.Library
 
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
         public void SortingMenu()
         {
             #region database
@@ -280,8 +299,8 @@ namespace LittleJohnsHut.Library
             Console.WriteLine("Choose the sort you want to implement \n" +
                 "1. Sort by order history by latest\n" +
                 "2. Sort by order history by earliest\n" +
-                "3. Sort by order history by cheapest\n" +
-                "4. Sort by order history by most expensive \n" +
+                "3. Sort by order history by most expensive\n" +
+                "4. Sort by order history by cheapest \n" +
                 "5. return to main menu \n" +
                 "6. exit the aplication");
 
@@ -319,9 +338,14 @@ namespace LittleJohnsHut.Library
             }
             ContinuesMenu();
         }
-        decimal cost = Convert.ToDecimal((4 + 2.50 + 0.75) * 0.6);
+       
+        decimal cost { get; set; } 
+        /// <summary>
+        /// 
+        /// </summary>
         public void OrderMenu()
         {
+          
             #region database
             var builder = new ConfigurationBuilder()
                          .SetBasePath(Directory.GetCurrentDirectory())
@@ -334,6 +358,7 @@ namespace LittleJohnsHut.Library
             var repo = new Repository.Repository(new LitteJohnsDBContext(optionsBuilder.Options));
             #endregion
             Validation v = new Validation();
+            cost = v.PriceValidation();
             var CurrentUser = new Users();
             var UserOrders = repo.timeValidation();
             
@@ -347,7 +372,7 @@ namespace LittleJohnsHut.Library
             
             if (v.timeValidation(CurrentUser.Orders.ToList()))
             {
-                Console.WriteLine("You Already order a pizza wait until we finish preparing it");
+                Console.WriteLine($"You Already order a pizza wait until we finish preparing the pizza, waiting time {v.diff.Value}");
                 ContinuesMenu();
             }
 
@@ -394,18 +419,19 @@ namespace LittleJohnsHut.Library
             }
             catch (Exception e)
             {
-                OrderMenu();
+                ContinuesMenu();
             }
             InvLocation = loc;
             cost = cost * p;
             if (cost < 0 || cost > 500)
             {
-                OrderMenu();
+                ContinuesMenu();
 
             }
-            if (p <= 0 || p >= 13)
+            if (p < 0 || p > 12)
             {
-                OrderMenu();
+                Console.WriteLine($"you cannot have more than 12 nor less than 0 your input is {p}");
+                ContinuesMenu();
             }
             DateTime DO = DateTime.Now;
             Model.Pizza pi = new Model.Pizza();
@@ -414,10 +440,15 @@ namespace LittleJohnsHut.Library
             {
                 
                  pi = PizzaMaker();
-                cost += cost;
+                
                 pi2.Add(pi);
             }
-            repo.ordering(cost, DO, p, loc.AdressLine1, Session.UserName);
+            if (cost < 0 || cost > 500)
+            {
+                Console.WriteLine($"Your cost is :{cost} please try agian with less pizzas");
+                ContinuesMenu();
+            }
+                repo.ordering(cost, DO, p, loc.AdressLine1, Session.UserName);
             repo.Save();
             var thisOrder = repo.FindDO(DO);
           
@@ -426,11 +457,20 @@ namespace LittleJohnsHut.Library
                repo.AddPizzaToOrder(item.Id, thisOrder.Id);
            }
             repo.Save();
+            Console.WriteLine("your Order is the following: ID "+ thisOrder.Id +"\n"+thisOrder.OrderDate +"\n" +
+                ""+thisOrder.PizzaCount +"\n" +
+                ""+thisOrder.Price+ "\n");
             ContinuesMenu();
         }
         private Location InvLocation { get; set; }
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public Model.Pizza PizzaMaker()
         {
+            
             #region databse
             var builder = new ConfigurationBuilder()
                         .SetBasePath(Directory.GetCurrentDirectory())
@@ -442,38 +482,39 @@ namespace LittleJohnsHut.Library
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("DataBaseConnection"));
             var repo = new Repository.Repository(new LitteJohnsDBContext(optionsBuilder.Options));
             #endregion
-            Console.WriteLine("Please choose your pizza from our selection, \n" +
-                "We recommend: "+repo.RecomenededbyPrice().ToArray()[0].ToArray()[0].Pizza.NameofPizza);
-           
+            Console.WriteLine("Please choose your pizza from our selection" 
+                             );
+
+
             var pizza = repo.DisplayPizza();
             foreach (var item in pizza)
             {
                 Console.WriteLine(item.NameofPizza);
             }
             string input = Console.ReadLine();
-            var piz = repo.FindPizzaByName(input);
-            if (piz == null)
+            var piz = new Model.Pizza();
+            try
             {
-                PizzaMaker();
+                 piz = repo.FindPizzaByName(input);
+                var test = piz.Id;
+            }
+            catch (Exception e)
+            {
+               
+                logger.Error(e, "File not found");
+                Console.WriteLine("The pizza you inserted does not exist please try again");
+                ContinuesMenu();
             }
             var InvetoryOfLocation = repo.findingInvetoryByLocationID(InvLocation.Id);
           
             
            
             var mm = new Validation();
-            Console.ReadLine();
+            
             var MaipulatingInventoryChesse = mm.FindInventoryByType("Cheese", InvetoryOfLocation);
             var MaipulatingInventoryDough = mm.FindInventoryByType("Dough", InvetoryOfLocation);
             var MaipulatingInventorySauce = mm.FindInventoryByType("Sauce", InvetoryOfLocation);
-            try
-            {
-                var test =  piz.Id;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Undifine Error ");
-                ContinuesMenu();
-            }
+           
             repo.creatingPizza(MaipulatingInventoryChesse.Id, piz.Id);
             repo.creatingPizza(MaipulatingInventoryDough.Id, piz.Id);
             repo.creatingPizza(MaipulatingInventorySauce.Id, piz.Id);
@@ -506,7 +547,7 @@ namespace LittleJohnsHut.Library
                     cost = cost + Convert.ToDecimal(.50);
 
                     break;
-                case "Pizza MeatlLover":
+                case "Pizza MeatLover":
                     var MaipulatingInventoryBacon2 = mm.FindInventoryByType("Bacon", InvetoryOfLocation);
                     repo.creatingPizza(MaipulatingInventoryBacon2.Id, piz.Id);
                     var MaipulatingInventoryHam2 = mm.FindInventoryByType("Ham", InvetoryOfLocation);
@@ -524,7 +565,7 @@ namespace LittleJohnsHut.Library
                     repo.creatingPizza(MaipulatingInventoryBacon.Id, piz.Id);
                     cost = cost + Convert.ToDecimal(0.50);
                     break;
-                case "Pizza Ham ":
+                case "Pizza Ham":
                     var MaipulatingInventoryHam = mm.FindInventoryByType("Ham", InvetoryOfLocation);
                     repo.creatingPizza(MaipulatingInventoryHam.Id, piz.Id);
                     cost = cost + Convert.ToDecimal(0.50);
@@ -533,7 +574,9 @@ namespace LittleJohnsHut.Library
             repo.Save();
             return piz;
         }
-      
+      /// <summary>
+      /// 
+      /// </summary>
         public void Exit()
         {
             #region database
