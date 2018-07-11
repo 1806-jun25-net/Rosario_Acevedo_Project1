@@ -19,7 +19,25 @@ namespace LittleJohnsHut.Library.Repository
             _db = db ?? throw new ArgumentNullException(nameof(db));
         }
 
+        public Model.Pizza FindPizzaByID(int input)
+        {
+            DBAccess.Pizza piz = new DBAccess.Pizza();
+            try
+            {
+                piz = _db.Pizza.FirstOrDefault(u => u.Id == input);
+            }
+            catch (ArgumentNullException e)
+            {
+                logger.Error(e, "NullPointer Error");
+                Console.WriteLine("Not found in the data base");
+            }
+            if (piz == null)
+            {
+                return null;
+            }
 
+            return Mapper.Map(piz);
+        }
         public Model.Pizza FindPizzaByName(string input)
         {
             DBAccess.Pizza piz = new DBAccess.Pizza();
@@ -128,13 +146,13 @@ namespace LittleJohnsHut.Library.Repository
 
             return Mapper.Map(order);
         }
-        public IEnumerable<Order> DiplayEarliest()
+        public IEnumerable<Order> DisplayLatest()
         {
             List<Order> ord = DisplayOrder().OrderBy(o => o.OrderDate).ToList();
 
             return ord;
         }
-        public IEnumerable<Order> DiplayLatest()
+        public IEnumerable<Order> DiplayEarliests()
         {
             List<Order> ord = DisplayOrder().OrderByDescending(o => o.OrderDate).ToList();
 
@@ -230,7 +248,46 @@ namespace LittleJohnsHut.Library.Repository
             return inv;
 
         }
-       
+       public IEnumerable<ProcessOrder> Recomeneded()
+        {
+
+            IEnumerable<ProcessOrder> Recom = _db.ProcessOrder.Include(P => P.Pizza).Include(u => u.Order).AsNoTracking();
+
+            return Recom;
+
+        }
+        public IEnumerable<IGrouping<decimal, ProcessOrder>> RecomenededbyPrice()
+        {
+            var po = Recomeneded().GroupBy(p => p.Order.Price);
+            return po;
+        }
+        public void AddPizzaToOrder(int pizID, int OrderID)
+        {
+            try
+            {
+                Orders findOrder = Mapper.Map(FindUserByOrderID(OrderID));
+            }
+            catch (Exception e)
+            {
+
+            }
+            
+                DBAccess.Pizza pizza = Mapper.Map(FindPizzaByID(pizID));
+            ProcessOrder po = new ProcessOrder
+            {
+                OrderId = OrderID,
+                PizzaId = pizID
+            };
+            _db.Add(po);
+           
+
+        }
+        public List<Users> timeValidation()
+        {
+            var users = _db.Users.Include(u => u.Orders).AsNoTracking().ToList();
+
+            return users;
+        }
         public void UpdatingInventroy(int Id)
         {
             
@@ -249,6 +306,31 @@ namespace LittleJohnsHut.Library.Repository
         public void Save()
         {
             _db.SaveChanges();
+        }
+        public Orders FindDO( DateTime Do)
+        {
+            var DO = _db.Orders.FirstOrDefault(u => u.OrderDate == Do);
+            return DO;
+        }
+        public User FindUserByID(int iD)
+        {
+            Users user = new Users();
+            try
+            {
+                user = _db.Users.FirstOrDefault(u => u.Id == iD);
+            }
+            catch (ArgumentNullException e)
+            {
+
+                logger.Error(e, "Null Pointer Error");
+                Console.WriteLine("Not found in the data base");
+            }
+            if (user == null)
+            {
+                return null;
+            }
+
+            return Mapper.Map(user);
         }
     }
 }

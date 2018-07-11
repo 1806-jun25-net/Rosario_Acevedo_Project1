@@ -17,7 +17,7 @@ namespace LittleJohnsHut.Library.XML
                 >));
 
             FileStream fs = null;
-            Console.WriteLine("inside the method");
+            
             try
             {
                 fs = new FileStream(fileName, FileMode.Create);
@@ -49,7 +49,7 @@ namespace LittleJohnsHut.Library.XML
                 >));
 
             FileStream fs = null;
-            Console.WriteLine("inside the method");
+            
             try
             {
                 fs = new FileStream(fileName, FileMode.Create);
@@ -81,7 +81,7 @@ namespace LittleJohnsHut.Library.XML
                 >));
 
             FileStream fs = null;
-            Console.WriteLine("inside the method");
+            
             try
             {
                 fs = new FileStream(fileName, FileMode.Create);
@@ -113,7 +113,7 @@ namespace LittleJohnsHut.Library.XML
                 ));
 
             FileStream fs = null;
-            Console.WriteLine("inside the method");
+            
             try
             {
                 fs = new FileStream(fileName, FileMode.Create);
@@ -146,7 +146,7 @@ namespace LittleJohnsHut.Library.XML
                 >));
 
             FileStream fs = null;
-            Console.WriteLine("inside the method");
+            
             try
             {
                 fs = new FileStream(fileName, FileMode.Create);
@@ -178,7 +178,7 @@ namespace LittleJohnsHut.Library.XML
                 >));
 
             FileStream fs = null;
-            Console.WriteLine("inside the method");
+            
             try
             {
                 fs = new FileStream(fileName, FileMode.Create);
