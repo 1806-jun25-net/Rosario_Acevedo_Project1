@@ -34,6 +34,7 @@ namespace LittleJohnsHut.Library.XML
                 logger.Error(e, "File not found");
                 Console.WriteLine($"Unexpected error: {e.Message}");
             }
+           
             finally
             {
                 if (fs != null)
