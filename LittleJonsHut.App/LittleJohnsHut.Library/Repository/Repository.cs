@@ -102,8 +102,11 @@ namespace LittleJohnsHut.Library.Repository
         /// <returns>a location object mapped to a model location</returns>
         public Location FindLocationByID(int ad1)
         {
+           
             var Loc = _db.Locations.FirstOrDefault(p => p.Id == ad1);
             return Mapper.Map(Loc);
+         
+            //return Mapper.Map(_db.Locations.Include(o => o.Id).AsNoTracking().First(o => o.Id == ad1));
         }
         /// <summary>
         /// Find's the Location using a string value 

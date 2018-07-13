@@ -25,7 +25,7 @@ namespace LittleJohnsHut.Web
         {
             services.AddScoped<Repository>();
             services.AddDbContext<LittleJohnsHut.DBAccess.LitteJohnsDBContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("appsettings.json")));
+            options.UseSqlServer(Configuration.GetConnectionString("DataBaseConnection")));
 
             services.AddMvc();
         }

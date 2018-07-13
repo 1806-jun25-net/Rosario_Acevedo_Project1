@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LittleJohnsHut.DBAccess;
+using LittleJohnsHut.Library.Model;
+using LittleJohnsHut.Library.Repository;
+using LittleJohnsHut.Web.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,85 +13,53 @@ namespace LittleJohnsHut.Web.Controllers
 {
     public class LocationController : Controller
     {
+        public Repository Repo { get; }
         // GET: Location
+        public LocationController(Repository repo)
+        {
+            Repo = repo;
+        }
+        [Route ("Index")]
         public ActionResult Index()
         {
-            return View();
+            var libLocations = Repo.DisplayLocation();
+            var wbLocation = libLocations.Select(x => new WebLocation
+            {
+                Id = x.Id,
+                AdressLine1 = x.AdressLine1
+                , AdressLine2 = x.AdressLine2
+                , ZipCode = x.ZipCode
+                
+                
+            });
+            return View(wbLocation);
         }
 
         // GET: Location/Details/5
-        public ActionResult Details(int id)
+        [Route ("Index/Order/{id?}")]
+        public ActionResult Order(int id)
         {
-            return View();
-        }
-
-        // GET: Location/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Location/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
+          
+            var libLocation = Repo.FindLocationByID(id);
+            var wbLocation = new WebLocation
             {
-                // TODO: Add insert logic here
+                AdressLine1 = libLocation.AdressLine1,
+                AdressLine2 = libLocation.AdressLine2,
+                Id = libLocation.Id,
+                ZipCode = libLocation.ZipCode
+               //, Orders = libLocation.Orders.Select(y => new WebOrder
+               //{
+               //    OrderDate = y.OrderDate,
+               //    Price = y.Price,
+               //    PizzaCount = y.PizzaCount,
+                   
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+                   
+               //})
+
+            };
+            return View(wbLocation);
         }
 
-        // GET: Location/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Location/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Location/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Location/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

@@ -13,5 +13,6 @@ namespace LittleJohnsHut.Web.Models
         public string Sauce { get; set; }
         public string SizeOfPizza { get; set; }
         public string NameOfTooping { get; set; }
+        public List<WebOrder> Order { get; set; }
     }
 }

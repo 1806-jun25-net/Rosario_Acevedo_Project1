@@ -11,5 +11,10 @@ namespace LittleJohnsHut.Web.Models
         public DateTime? OrderDate { get; set; }
         public int PizzaCount { get; set; }
         public decimal Price { get; set; }
+        public int locationId { get; set; }
+        public int UserId { get; set; }
+        public WebLocation Location { get; set; }
+        public WebUser User { get; set; }
+        public List<WebPizza> Pizza { get; set; }
     }
 }

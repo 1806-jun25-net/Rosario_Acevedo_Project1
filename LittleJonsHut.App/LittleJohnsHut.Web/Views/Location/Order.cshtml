@@ -1,0 +1,36 @@
+﻿@model LittleJohnsHut.Web.Models.WebLocation
+
+<div>
+    <h4>WebLocation</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AdressLine1)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AdressLine1)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AdressLine2)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AdressLine2)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ZipCode)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ZipCode)
+        </dd>
+    </dl>
+</div>
+<div>
+
+    <a asp-action="Index">Back to List</a>
+</div>

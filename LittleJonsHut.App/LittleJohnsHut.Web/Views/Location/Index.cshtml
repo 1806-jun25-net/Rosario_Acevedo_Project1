@@ -1,0 +1,43 @@
+﻿@model IEnumerable<LittleJohnsHut.Web.Models.WebLocation>
+
+<p>
+   
+</p>
+<table class="table">
+    <thead>
+        <tr>
+               
+                <th>
+                    @Html.DisplayNameFor(model => model.AdressLine1)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AdressLine2)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ZipCode)
+                </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.AdressLine1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AdressLine2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ZipCode)
+            </td>
+            <td>
+               
+             <button type ="button" class="btn btn-default">   @Html.ActionLink("Order", "Order", new { id = item.Id }) </button>
+              
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

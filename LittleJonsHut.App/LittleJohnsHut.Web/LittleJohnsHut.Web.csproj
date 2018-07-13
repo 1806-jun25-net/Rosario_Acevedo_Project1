@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\LittleJohnsHut.DBAccess\LittleJohnsHut.DBAccess.csproj" />
     <ProjectReference Include="..\LittleJohnsHut.Library\LittleJohnsHut.Library.csproj" />
   </ItemGroup>
 
