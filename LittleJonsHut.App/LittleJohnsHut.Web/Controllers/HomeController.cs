@@ -5,13 +5,63 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using LittleJohnsHut.Web.Models;
+using LittleJohnsHut.Library.Repository;
+using LittleJohnsHut.Library.Model;
+using LittleJohnsHut.DBAccess;
+using Microsoft.AspNetCore.Routing;
 
 namespace LittleJohnsHut.Web.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        public Repository Repo { get; }
+        
+        public HomeController(Repository repo)
         {
+            Repo = repo;
+        }
+        public IActionResult Index([FromQuery] string name)
+        {
+            if (name == null)
+            {
+                return View();
+            }
+            else
+            {
+                ViewBag.view = Repo.FindUserByName(name);
+                Users wbUser = Repo.FindUserByName(name);
+               if ( wbUser == null) {
+
+
+                }else
+                {
+                    
+                        var Session = new WebUser
+                        {
+                            Id = wbUser.Id,
+                            FirstName = wbUser.FirstName,
+                            LastName = wbUser.LastName,
+                            //location = new Locations
+                            //{
+                            //    AdressLine1 = wbUser.Location.AdressLine1,
+                            //    AdressLine2 = wbUser.Location.AdressLine2,
+                            //    Id = wbUser.Location.Id,
+                            //    ZipCode = wbUser.Location.ZipCode,
+
+                            //}
+                        
+                       
+                    };
+                    ViewBag.view = Session.FirstName;
+                    return RedirectToAction("User", new RouteValueDictionary(
+                            new { action = "Index",  UserId = Session.Id }
+                        
+                        ));
+                    //return RedirectToAction("","", new { });
+                }
+              
+            }
+          
             return View();
         }
 

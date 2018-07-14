@@ -13,7 +13,7 @@ namespace LittleJohnsHut.Web.Models
         public string AdressLine2 { get; set; }
         public string ZipCode { get; set; }
         //public List<Inventory> Inventory { get; set; }
-        //public IEnumerable<WebOrder> Orders { get; set; }
+        public IEnumerable<WebOrder> Orders { get; set; }
         //public List<WebUser> Users { get; set; }
     }
 }

@@ -151,7 +151,7 @@ namespace LittleJohnsHut.Library.Repository
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public User FindUserByName(string input)
+        public Users FindUserByName(string input)
         {
             Users user = new Users();
             try
@@ -168,7 +168,26 @@ namespace LittleJohnsHut.Library.Repository
                 return null; 
             }
 
-            return Mapper.Map(user);
+            return user;
+        }
+        public Users FindUserById(int input)
+        {
+            Users user = new Users();
+            try
+            {
+                user = _db.Users.FirstOrDefault(u => u.Id == input);
+            }
+            catch (ArgumentNullException e)
+            {
+                logger.Error(e, "Null Pointer Error");
+                Console.WriteLine("Not found in the data base");
+            }
+            if (user == null)
+            {
+                return null;
+            }
+
+            return user;
         }
         /// <summary>
         /// 

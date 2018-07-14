@@ -23,6 +23,7 @@ namespace LittleJohnsHut.Web.Controllers
         public ActionResult Index()
         {
             var libLocations = Repo.DisplayLocation();
+           
             var wbLocation = libLocations.Select(x => new WebLocation
             {
                 Id = x.Id,
@@ -41,22 +42,14 @@ namespace LittleJohnsHut.Web.Controllers
         {
           
             var libLocation = Repo.FindLocationByID(id);
+           
             var wbLocation = new WebLocation
             {
                 AdressLine1 = libLocation.AdressLine1,
                 AdressLine2 = libLocation.AdressLine2,
                 Id = libLocation.Id,
-                ZipCode = libLocation.ZipCode
-               //, Orders = libLocation.Orders.Select(y => new WebOrder
-               //{
-               //    OrderDate = y.OrderDate,
-               //    Price = y.Price,
-               //    PizzaCount = y.PizzaCount,
-                   
-
-                   
-               //})
-
+                ZipCode = libLocation.ZipCode, 
+     
             };
             return View(wbLocation);
         }
