@@ -12,7 +12,7 @@ namespace LittleJohnsHut.Web.Models
         public string FirstName { get; set; }
         public string UserName { get; set; }
         public string LastName { get; set; }
-        public Locations location { get; set; }
+        public int locationid { get; set; }
         public List<Orders> Order { get; set; }
     }
 }

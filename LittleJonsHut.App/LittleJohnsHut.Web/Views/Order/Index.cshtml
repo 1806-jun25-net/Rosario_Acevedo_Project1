@@ -1,64 +1,53 @@
 ﻿@model IEnumerable<LittleJohnsHut.Web.Models.WebOrder>
-
 <p>
     <!-- <a asp-action="Create" >Create New</a> -->
     <form asp-action="Index" method="get">
         <input type="text" name="btnPress" />
-        <button type="submit">Sort </button>
+        <button class="btn btn-default" type="submit">Sort </button>
     </form>
 </p>
+
+
 <p>@ViewBag.Debug  </p>
-<table class="table">
+<table class="table" style="background-color: white;  border-radius:25px">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Id)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.OrderDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.PizzaCount)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Price)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.locationId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.UserId)
-                </th>
+
+            <th>
+                <p style="color:black">  @Html.DisplayNameFor(model => model.Id) </p>
+            </th>
+            <th>
+                <p style="color:black"> @Html.DisplayNameFor(model => model.OrderDate) </p>
+            </th>
+            <th>
+                <p style="color:black">  @Html.DisplayNameFor(model => model.PizzaCount) </p>
+            </th>
+            <th>
+                <p style="color:black"> @Html.DisplayNameFor(model => model.Price) </p>
+            </th>
+
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PizzaCount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.locationId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserId)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <p style="color:black">   @Html.DisplayFor(modelItem => item.Id) </p>
+                </td>
+                <td>
+                    <p style="color:black">  @Html.DisplayFor(modelItem => item.OrderDate) </p>
+                </td>
+                <td>
+                    <p style="color:black">  @Html.DisplayFor(modelItem => item.PizzaCount) </p>
+                </td>
+                <td>
+                    <p style="color:black">   @Html.DisplayFor(modelItem => item.Price) </p>
+                </td>
+
+
+            </tr>
+        }
     </tbody>
 </table>

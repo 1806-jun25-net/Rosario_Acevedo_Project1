@@ -20,6 +20,7 @@ namespace LittleJohnsHut.Web.Controllers
         {
             Repo = repo;
         }
+       public WebUser webUser { get; set; }
         public IActionResult Index([FromQuery] string name)
         {
             if (name == null)
@@ -52,7 +53,7 @@ namespace LittleJohnsHut.Web.Controllers
                         
                        
                     };
-                    ViewBag.view = Session.FirstName;
+                    webUser = Session;
                     return RedirectToAction("User", new RouteValueDictionary(
                             new { action = "Index",  UserId = Session.Id }
                         

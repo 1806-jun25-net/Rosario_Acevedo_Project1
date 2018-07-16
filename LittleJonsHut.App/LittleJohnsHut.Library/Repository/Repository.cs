@@ -74,11 +74,11 @@ namespace LittleJohnsHut.Library.Repository
         /// <param name="ln">Last Name of the User</param>
         /// <param name="un">User Name of the client</param>
         /// <param name="loc">the location of set client</param>
-        public void RegisterUser(string fn, string ln,string un, string loc)
+        public void RegisterUser(string fn, string ln,string un, int loc)
         {
            
            
-            Locations Location = _db.Locations.FirstOrDefault(u =>u.AdressLine1  == loc );
+            Locations Location = _db.Locations.FirstOrDefault(u =>u.Id  == loc );
             if (Location == null)
             {
                 
@@ -89,11 +89,33 @@ namespace LittleJohnsHut.Library.Repository
                FirstName  = fn, 
                LastName = ln, 
                UserName = un, 
-               LocationId = Location.Id
+               LocationId = loc
 
             };
             _db.Add(User);
             
+        }
+        public void UpdateUser(int id, string fn, string ln, string un, int loc)
+        {
+
+           
+            Locations Location = _db.Locations.FirstOrDefault(u => u.Id == loc);
+            if (Location == null)
+            {
+
+                throw new ArgumentException("Locaiton was not found", nameof(loc));
+            }
+            var User = new Users
+            {
+                Id = id,
+                FirstName = fn,
+                LastName = ln,
+                UserName = un,
+                LocationId = loc
+
+            };
+            _db.Update(User);
+
         }
         /// <summary>
         /// this method finds the location utilizing the id
@@ -132,10 +154,10 @@ namespace LittleJohnsHut.Library.Repository
         /// 
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Order> DisplayOrderLocation()
+        public IEnumerable<Orders> DisplayOrderLocation()
         {
             List<Orders> order = _db.Orders.Include(o => o.Location).AsNoTracking().ToList();
-            return Mapper.Map(order);
+            return order;
         }
         /// <summary>
         /// 
@@ -468,6 +490,11 @@ namespace LittleJohnsHut.Library.Repository
         public Orders FindDO( DateTime Do)
         {
             var DO = _db.Orders.FirstOrDefault(u => u.OrderDate == Do);
+            return DO;
+        }
+        public Orders FindOrderByID(int Do)
+        {
+            var DO = _db.Orders.FirstOrDefault(u => u.Id == Do);
             return DO;
         }
         /// <summary>

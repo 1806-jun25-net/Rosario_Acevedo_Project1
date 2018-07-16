@@ -1,6 +1,8 @@
-﻿body {
+﻿
+body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background-image: url(../PNG/BackGroundjpg);
 }
 
 /* Wrapping element */
@@ -25,7 +27,9 @@
 #qrCode {
     margin: 15px;
 }
-
+#Earase{
+    display: none;
+}
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
     /* Hide captions */

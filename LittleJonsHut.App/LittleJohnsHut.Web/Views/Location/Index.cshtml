@@ -3,18 +3,18 @@
 <p>
    
 </p>
-<table class="table">
+<table class="table" style="background-color:white; border-radius:25px">
     <thead>
         <tr>
                
                 <th>
-                    @Html.DisplayNameFor(model => model.AdressLine1)
+                    <p style="color:black">  @Html.DisplayNameFor(model => model.AdressLine1) </p>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.AdressLine2)
+                    <p style="color:black"> @Html.DisplayNameFor(model => model.AdressLine2) </p>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.ZipCode)
+                    <p style="color:black">  @Html.DisplayNameFor(model => model.ZipCode) </p>
                 </th>
             <th></th>
         </tr>
@@ -24,17 +24,17 @@
         <tr>
             
             <td>
-                @Html.DisplayFor(modelItem => item.AdressLine1)
+                <p style="color:black"> @Html.DisplayFor(modelItem => item.AdressLine1) </p>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AdressLine2)
+               <p style="color:black"> @Html.DisplayFor(modelItem => item.AdressLine2) </p> 
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ZipCode)
+                <p style="color:black"> @Html.DisplayFor(modelItem => item.ZipCode) </p>
             </td>
             <td>
                
-             <button type ="button" class="btn btn-default">   @Html.ActionLink("Order", "Order", new { id = item.Id }) </button>
+             <button type ="button" class="btn btn-default">   @Html.ActionLink("Details", "Order", new { id = item.Id }) </button>
               
             </td>
         </tr>

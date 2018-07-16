@@ -71,7 +71,7 @@ namespace LittleJohnsHut.Library.BusinessLogic
         /// <param name="u"></param>
         /// <returns></returns>
        public TimeSpan? diff { get; set; }
-       public bool timeValidation(List<Orders> u)
+       public bool timeValidation(IEnumerable<Order> u)
         {
             foreach (var item in u)
             {
@@ -93,7 +93,7 @@ namespace LittleJohnsHut.Library.BusinessLogic
         {
             return Convert.ToDecimal((4 + 2.50 + 0.75) * 0.6);
         }
-        
 
+      
     }
 }

@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 using LittleJohnsHut.Library.Repository;
 using LittleJohnsHut.Web.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 
 namespace LittleJohnsHut.Web.Controllers
 {
@@ -19,9 +21,13 @@ namespace LittleJohnsHut.Web.Controllers
             Repo = repo;
         }
         [Route ("Home/User")]
-        public ActionResult Index([FromQuery]int id)
+        public ActionResult Index([FromQuery]int UserId, [FromQuery]int OrderId)
         {
-            var session = Repo.FindUserByID(id);
+
+           // HomeController s = new HomeController(Repo);
+            ViewBag.Id = UserId;
+            var session = Repo.FindUserByID(UserId);
+
             if (session != null)
             {
                 List<WebUser> wUser = new List<WebUser>();
@@ -29,7 +35,9 @@ namespace LittleJohnsHut.Web.Controllers
                         FirstName = session.FirstName, 
                         LastName = session .LastName, 
                         Id = session.Id, 
-                        UserName = session.UserName
+                        UserName = session.UserName,
+                        locationid = session.locationID
+                        
                 });
                 return View(wUser);
             }
@@ -41,25 +49,14 @@ namespace LittleJohnsHut.Web.Controllers
                 Id = x.Id, 
                 UserName =x.UserName
             });
+            
             return View(wbUser);
         }
 
-        // GET: User/Details/5
-       // [Route("Home/User/{id?}")]
-        public ActionResult Details([FromQuery]int id)
-        {
-            var libUser = Repo.FindUserByID(id);
-            var wbUser = new WebUser
-            {
-                FirstName = libUser.FirstName,
-                LastName = libUser.LastName,
-                Id = libUser.Id,
-                UserName = libUser.UserName
-            };
-            return View(wbUser);
-        }
+     
 
         // GET: User/Create
+      
         public ActionResult Create()
         {
             return View();
@@ -68,18 +65,34 @@ namespace LittleJohnsHut.Web.Controllers
         // POST: User/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(WebUser collection, string Loc)
         {
-            try
+            if(Loc == "Reston" || Loc == "SanJuan" || Loc == "Tampa" || Loc == "Honolulu" || Loc == "Los Angeles" || Loc == "Kansas")
             {
-                // TODO: Add insert logic here
 
-                return RedirectToAction(nameof(Index));
+                try
+                {
+
+
+                    var loc = Repo.FindLocationByAdrress(Loc);
+
+                    Repo.RegisterUser(collection.FirstName, collection.LastName, collection.UserName, loc.Id);
+                    Repo.Save();
+                    var session = Repo.FindUserByName(collection.UserName);
+                    return RedirectToAction(nameof(Index), new { UserId = session.Id });
+                }
+                catch
+                {
+                    ViewBag.Error = "this location is not valid";
+                    return View();
+                }
             }
-            catch
+            else
             {
+                ViewBag.Error = "this location is not valid";
                 return View();
             }
+           
         }
 
         // GET: User/Edit/5
@@ -91,18 +104,27 @@ namespace LittleJohnsHut.Web.Controllers
         // POST: User/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, WebUser collection, string Loc)
         {
-            try
+            if (Loc == "Reston" || Loc == "SanJuan" || Loc == "Tampa" || Loc == "Honolulu" || Loc == "Los Angeles" || Loc == "Kansas")
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    var loc = Repo.FindLocationByAdrress(Loc);
+                    Repo.UpdateUser(id, collection.FirstName, collection.LastName, collection.UserName, loc.Id);
+                    return RedirectToAction(nameof(Index), new { UserId = id });
+                }
+                catch
+                {
+                    return View();
+                }
             }
-            catch
+            else
             {
+                ViewBag.Error = "This location does not exist please try again";
                 return View();
             }
+            
         }
         
     }
