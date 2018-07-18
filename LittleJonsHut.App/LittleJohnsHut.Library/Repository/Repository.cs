@@ -329,12 +329,15 @@ namespace LittleJohnsHut.Library.Repository
             
             if (local == null)
             {
-                Console.WriteLine( ("Location not found" + loc));
-               
-            }else if (UserName == null)
+                throw new ArgumentException("Locaiton was not found", nameof(local));
+
+            }
+            else if (UserName == null)
             {
-                Console.WriteLine( ("User Not Found"+ un));
-            }else if (pc < 0 || pc > 12  || cost > 500 || cost < 0)
+                throw new ArgumentException("User Name was not found", nameof(UserName));
+
+            }
+            else if (pc < 0 || pc > 12  || cost > 500 || cost < 0)
             {
                 Console.WriteLine(($"you cannot have, Pizzas Inputed: {pc} nor Cost: {cost}"));
             }
