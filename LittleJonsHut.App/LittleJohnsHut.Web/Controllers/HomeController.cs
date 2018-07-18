@@ -42,14 +42,7 @@ namespace LittleJohnsHut.Web.Controllers
                             Id = wbUser.Id,
                             FirstName = wbUser.FirstName,
                             LastName = wbUser.LastName,
-                            //location = new Locations
-                            //{
-                            //    AdressLine1 = wbUser.Location.AdressLine1,
-                            //    AdressLine2 = wbUser.Location.AdressLine2,
-                            //    Id = wbUser.Location.Id,
-                            //    ZipCode = wbUser.Location.ZipCode,
-
-                            //}
+                          
                         
                        
                     };
@@ -58,7 +51,7 @@ namespace LittleJohnsHut.Web.Controllers
                             new { action = "Index",  UserId = Session.Id }
                         
                         ));
-                    //return RedirectToAction("","", new { });
+                    
                 }
               
             }

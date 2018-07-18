@@ -112,10 +112,12 @@ namespace LittleJohnsHut.Web.Controllers
                 {
                     var loc = Repo.FindLocationByAdrress(Loc);
                     Repo.UpdateUser(id, collection.FirstName, collection.LastName, collection.UserName, loc.Id);
+                    Repo.Save();
                     return RedirectToAction(nameof(Index), new { UserId = id });
                 }
-                catch
+                catch(Exception e)
                 {
+                    ViewBag.Error = e.Message;
                     return View();
                 }
             }

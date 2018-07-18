@@ -62,12 +62,10 @@ namespace LittleJohnsHut.Web.Controllers
         }
 
         // GET: Order/Create
-        //[Route("User/Order/{id?}")]
+    
         public ActionResult Order([FromQuery] int locationId, [FromQuery] int UserId)
         {
-           // Validation v = new  Validation();
-           // var session = Repo.FindUserByID(id);
-           // ViewData["session"] = session.FirstName;
+          
 
             return View("Order");
         }
@@ -76,9 +74,9 @@ namespace LittleJohnsHut.Web.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken] 
        
-        public ActionResult Order(IFormCollection collection, string locationId, int UserId, int PizzaPep, int PizzaMeatLover, int PizzaVeggie, int PizzaSuprema)
+        public ActionResult Order( string locationId, int UserId, int PizzaPep, int PizzaMeatLover, int PizzaVeggie, int PizzaSuprema)
         {
-            Mapper map = new Mapper();
+            
             Validation v = new Validation();
             IEnumerable<Order> t = Repo.DisplayOrder();
             int PizzaCount = PizzaPep + PizzaMeatLover + PizzaSuprema + PizzaVeggie;
