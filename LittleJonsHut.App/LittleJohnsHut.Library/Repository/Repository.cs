@@ -329,12 +329,12 @@ namespace LittleJohnsHut.Library.Repository
             
             if (local == null)
             {
-                throw new ArgumentException("Locaiton was not found", nameof(local));
+                throw new ArgumentException("Locaiton was not found");
 
             }
             else if (UserName == null)
             {
-                throw new ArgumentException("User Name was not found", nameof(UserName));
+                throw new ArgumentException("User Name was not found");
 
             }
             else if (pc < 0 || pc > 12  || cost > 500 || cost < 0)
